@@ -1,0 +1,25 @@
+# Бинарные файлы
+*.pdf
+*.html
+*.xlsx
+*.png
+
+# Результаты аудитов (всё что генерируется)
+**/_output/
+**/blocks/
+**/*_result.json
+**/*_annotation.json
+**/*_ocr.html
+**/client.log
+**/audit_log.jsonl
+
+# Бэкапы старых прогонов
+**/subagent_results/
+**/agent_teams_results/
+prompts/EOM original/
+
+# Системные
+*.pyc
+__pycache__/
+.DS_Store
+Thumbs.db
