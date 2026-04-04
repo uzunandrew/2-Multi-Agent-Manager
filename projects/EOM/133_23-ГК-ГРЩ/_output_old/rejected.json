@@ -1,0 +1,29 @@
+{
+  "rejected": [
+    {
+      "original_id": "cables_001",
+      "reason": "contradicts_drawing",
+      "critic": "?",
+      "detail": "Шаг 1 (evidence): block_id A99X-NV3N-KRM существует в structured_blocks.json — это схема РП2. В описании блока подтверждается: Линия 3, QF2.3 BA-332A 125A (НЕ 500A!), кабель М-2.3 ППГнг(А)-HF 4х(1х70)"
+    },
+    {
+      "original_id": "norms_012",
+      "reason": "weak_evidence",
+      "critic": "?",
+      "detail": "Evidence слабое: page=null, sheet=null. Агент написал «Страница с таблицей спецификации», не указав конкретную страницу и block_id. По document.md спецификация расположена на страницах 15-19. Хотя утв"
+    },
+    {
+      "original_id": "norms_013",
+      "reason": "weak_evidence",
+      "critic": "?",
+      "detail": "Evidence слабое: page=null, sheet=null. Агент указал «Страница с таблицей спецификации» без конкретной привязки к странице и block_id. Техническая суть может быть верна (опечатка «ГОСТ 4907-5» вместо "
+    },
+    {
+      "original_id": "tables_013",
+      "reason": "duplicate",
+      "critic": "?",
+      "detail": "Идентичное замечание об адресе «Масляническая vs Мосфильмовская» и кадастровом номере присутствует у агента drawings как drawings_011 (temp_id drawings_011), с confidence=0.95 и более подробным описан"
+    }
+  ],
+  "total": 4
+}
