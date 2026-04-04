@@ -351,13 +351,21 @@ For equipment specifications:
 [all items]
 ```
 
+## Complete reading failure
+
+If the image is entirely unreadable (rotation, low resolution, scanning artifacts, severe cropping), output ONLY:
+
+`READ ERROR: image unreadable. Reason: [rotation / low resolution / scanning artifacts / severe cropping]`
+
+Do not attempt to describe or guess content from an unreadable image.
+
 ## Rules
 
 1. **Main rule:** for each room you MUST link all finish types: floor + walls + ceiling + equipment. Do not describe floors separately from walls — tie them to the room. If data for a specific element in a given room is absent from any sheet — write "no data"; inventing materials is strictly prohibited.
 
 2. **Layered composition:** always describe finish layers in order from substrate to topcoat (primer → plaster → filler → paint/decorative).
 
-3. **If a parameter is unreadable** on the image — write "unreadable" instead of guessing.
+3. **If a parameter is unreadable** on the image — write `[unreadable]` instead of guessing.
 
 4. **Material markings:** extract all markings (Ш-1, К-1, ПЛ-2, ПТ-3, D-1) and their decodings.
 
@@ -383,3 +391,30 @@ For equipment specifications:
 
 **Good:** "Room 1.01 vestibule: wall А (axis 1) — К-1 porcelain stoneware 600x600 h=0...1200, above Д-1 decorative plaster Prometeks to +2700. Ceiling ПТ-1 h=2700, shadow profile Dekart 20 mm. Luminaires: 4x DeltaLight Spy On 10W recessed."
 --> All elements are tied to room and wall, with specific parameters
+
+## Accuracy standards
+
+1. **Describe only technically significant content.** Do not describe visual style, shadows, decorative graphics, line thickness, line/contour colors unless they carry engineering meaning. Exceptions: color coding per legend (e.g., red lines for fire systems, NCS/RAL codes).
+
+2. **Do not guess.** If a parameter, mark, dimension, node number, designation, sheet reference, or fragment is read with uncertainty — write `[unreadable]`.
+
+3. **Complete reading failure.** If the entire image is unreadable, output only: `READ ERROR: image unreadable. Reason: [rotation / low resolution / scanning artifacts / severe cropping]`
+
+4. **Preserve designations and units exactly as on the drawing.** Do not normalize or paraphrase marks, positions, DN/Ду, Ø, EI/REI, IP, kW, kVA, A, kA, cosφ, m², m³, l/s, Pa, °C and other designations.
+
+5. **If one image contains multiple entities** (plan + detail + table + notes), describe them under separate subheadings, do not mix into one block.
+
+6. **Do not measure dimensions from the image if they are not explicitly labeled.** Scale-based estimation is allowed only as low-confidence and must be explicitly marked as approximate.
+
+7. **At the end of every description, add mandatory blocks:**
+
+```
+EXACT LABELS AND MARKINGS:
+- [list all clearly readable labels, marks, positions, designations]
+
+UNREADABLE / AMBIGUOUS FRAGMENTS:
+- [list fragments where data is partially readable or uncertain]
+
+CROSS-REFERENCES TO NODES / SHEETS / FRAGMENTS:
+- [list all references like "See node 1", "See sheet 5", "Detail A" etc.]
+```

@@ -275,6 +275,14 @@ NOTES:
 [text notes below the table or callouts to it]
 ```
 
+## Complete reading failure
+
+If the image is entirely unreadable (rotation, low resolution, scanning artifacts, severe cropping), output ONLY:
+
+`READ ERROR: image unreadable. Reason: [rotation / low resolution / scanning artifacts / severe cropping]`
+
+Do not attempt to describe or guess content from an unreadable image.
+
 ## Rules
 
 1. **Main rule:** for each element, specify CONCRETE numerical parameters — load capacity, size, quantity, slope. Do not limit yourself to "passenger elevator" — write "passenger elevator 630 kg, 1.0 m/s, cabin 1100x1400x2100 mm".
@@ -291,7 +299,7 @@ NOTES:
 
 7. **Format flexibility (important):** The formats proposed above are a basic framework. If the drawing contains important elements, sections, local mounting details, or non-standard callouts not described in the template, independently add new logical blocks (e.g., `SECTION 1-1:`, `DETAIL A:`, or `MIRROR MOUNTING SCHEME:`), maintaining the general style of structured text.
 
-8. **Tables without headers:** If a table is a continuation from another sheet and has no header, reconstruct the column logic from the content, but be sure to indicate this in a note below the table.
+8. **Tables without headers:** If a table is a continuation from another sheet and has no header, restore column structure ONLY if the correspondence is unambiguous. Otherwise write: "Table is a continuation, but column structure is not fully confirmed." Be sure to indicate this in a note below the table.
 
 ## Typical description errors (what to avoid)
 
@@ -300,3 +308,30 @@ NOTES:
 - "The waste collection room is located on the -1 floor" — No dimensions, equipment, or ventilation specified
 
 - "Spaces No. 1-40 standard 2500x5300 mm, No. 41-42 for persons with disabilities 3500x5300. Driveway 6000 mm. Ramp i=15%, w. 3500 mm. Signs: 5.15.1, 3.24 '5 km/h'. Clear height 2200 mm" — All elements are specific, verifiable
+
+## Accuracy standards
+
+1. **Describe only technically significant content.** Do not describe visual style, shadows, decorative graphics, line thickness, line/contour colors unless they carry engineering meaning. Exceptions: color coding per legend (e.g., red lines for fire systems, NCS/RAL codes).
+
+2. **Do not guess.** If a parameter, mark, dimension, node number, designation, sheet reference, or fragment is read with uncertainty — write `[unreadable]`.
+
+3. **Complete reading failure.** If the entire image is unreadable, output only: `READ ERROR: image unreadable. Reason: [rotation / low resolution / scanning artifacts / severe cropping]`
+
+4. **Preserve designations and units exactly as on the drawing.** Do not normalize or paraphrase marks, positions, DN/Ду, Ø, EI/REI, IP, kW, kVA, A, kA, cosφ, m², m³, l/s, Pa, °C and other designations.
+
+5. **If one image contains multiple entities** (plan + detail + table + notes), describe them under separate subheadings, do not mix into one block.
+
+6. **Do not measure dimensions from the image if they are not explicitly labeled.** Scale-based estimation is allowed only as low-confidence and must be explicitly marked as approximate.
+
+7. **At the end of every description, add mandatory blocks:**
+
+```
+EXACT LABELS AND MARKINGS:
+- [list all clearly readable labels, marks, positions, designations]
+
+UNREADABLE / AMBIGUOUS FRAGMENTS:
+- [list fragments where data is partially readable or uncertain]
+
+CROSS-REFERENCES TO NODES / SHEETS / FRAGMENTS:
+- [list all references like "See node 1", "See sheet 5", "Detail A" etc.]
+```

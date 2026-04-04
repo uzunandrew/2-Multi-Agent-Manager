@@ -314,13 +314,21 @@ INTERLOCKS:
 - Fire signal -> KV1 CLOSE
 ```
 
+## Complete reading failure
+
+If the image is entirely unreadable (rotation, low resolution, scanning artifacts, severe cropping), output ONLY:
+
+`READ ERROR: image unreadable. Reason: [rotation / low resolution / scanning artifacts / severe cropping]`
+
+Do not attempt to describe or guess content from an unreadable image.
+
 ## Rules
 
 1. **Main rule:** for each device/sensor on the diagram, capture: designation, type/model, location, connection (to which controller/loop/switch), cable type.
 
 2. **If the diagram has multiple subsystems** (e.g., APS + SOUE on one sheet) — describe each subsystem separately with clear headers.
 
-3. **If a parameter is unreadable** on the image — write "unreadable" instead of guessing.
+3. **If a parameter is unreadable** on the image — write `[unreadable]` instead of guessing.
 
 4. **Device counts:** always count and state the total number of each device type. This is critical for cross-checking with specifications.
 
@@ -338,3 +346,30 @@ X **Bad:** "PPKP has several loops connected to detectors on different floors."
 
 V **Good:** "Loop 1 (S2000-KDL): 47 smoke detectors DIP-34A + 6 manual call points IPR 513-3A + 4 short-circuit isolators B2R-KDL, floors 1-5. Loop 2: ..."
 -> Exact counts, types, floor allocation
+
+## Accuracy standards
+
+1. **Describe only technically significant content.** Do not describe visual style, shadows, decorative graphics, line thickness, line/contour colors unless they carry engineering meaning. Exceptions: color coding per legend (e.g., red lines for fire systems, NCS/RAL codes).
+
+2. **Do not guess.** If a parameter, mark, dimension, node number, designation, sheet reference, or fragment is read with uncertainty — write `[unreadable]`.
+
+3. **Complete reading failure.** If the entire image is unreadable, output only: `READ ERROR: image unreadable. Reason: [rotation / low resolution / scanning artifacts / severe cropping]`
+
+4. **Preserve designations and units exactly as on the drawing.** Do not normalize or paraphrase marks, positions, DN/Ду, Ø, EI/REI, IP, kW, kVA, A, kA, cosφ, m², m³, l/s, Pa, °C and other designations.
+
+5. **If one image contains multiple entities** (plan + detail + table + notes), describe them under separate subheadings, do not mix into one block.
+
+6. **Do not measure dimensions from the image if they are not explicitly labeled.** Scale-based estimation is allowed only as low-confidence and must be explicitly marked as approximate.
+
+7. **At the end of every description, add mandatory blocks:**
+
+```
+EXACT LABELS AND MARKINGS:
+- [list all clearly readable labels, marks, positions, designations]
+
+UNREADABLE / AMBIGUOUS FRAGMENTS:
+- [list fragments where data is partially readable or uncertain]
+
+CROSS-REFERENCES TO NODES / SHEETS / FRAGMENTS:
+- [list all references like "See node 1", "See sheet 5", "Detail A" etc.]
+```

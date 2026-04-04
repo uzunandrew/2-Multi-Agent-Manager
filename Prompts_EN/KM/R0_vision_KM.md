@@ -256,10 +256,10 @@ NOTES ON DRAWING:
 
 2. **If the drawing has multiple members/nodes** -- describe each separately with its mark.
 
-3. **If a parameter is unreadable** on the image -- write "unreadable" instead of guessing.
+3. **If a parameter is unreadable** on the image -- write `[unreadable]` instead of guessing.
 3a. **If the image is completely unreadable** (rotated, resolution <72 dpi, solid artifacts):
 output only:
-`READ ERROR: image unreadable. Reason: [rotation / low resolution / scanning artifacts]`
+`READ ERROR: image unreadable. Reason: [rotation / low resolution / scanning artifacts / severe cropping]`
 and do not attempt to describe the content.
 
 4. **Description order:** for plans -- by axes left to right, top to bottom. For elements -- main profile first, then components. For connections -- from main member outward.
@@ -279,3 +279,30 @@ and do not attempt to describe the content.
 - "Bolted connection" -- Bolt class, diameter, quantity, spacing not specified
 
 + "KF-1: HEB 200, S245, L=3600mm, at axes B/3, el. -3.600 to -0.150. Base plate 300x300x20, 4x M24 cl.8.8 anchors, embedment 300mm" -- All parameters are specific and verifiable
+
+## Accuracy standards
+
+1. **Describe only technically significant content.** Do not describe visual style, shadows, decorative graphics, line thickness, line/contour colors unless they carry engineering meaning. Exceptions: color coding per legend (e.g., red lines for fire systems, NCS/RAL codes).
+
+2. **Do not guess.** If a parameter, mark, dimension, node number, designation, sheet reference, or fragment is read with uncertainty — write `[unreadable]`.
+
+3. **Complete reading failure.** If the entire image is unreadable, output only: `READ ERROR: image unreadable. Reason: [rotation / low resolution / scanning artifacts / severe cropping]`
+
+4. **Preserve designations and units exactly as on the drawing.** Do not normalize or paraphrase marks, positions, DN/Ду, Ø, EI/REI, IP, kW, kVA, A, kA, cosφ, m², m³, l/s, Pa, °C and other designations.
+
+5. **If one image contains multiple entities** (plan + detail + table + notes), describe them under separate subheadings, do not mix into one block.
+
+6. **Do not measure dimensions from the image if they are not explicitly labeled.** Scale-based estimation is allowed only as low-confidence and must be explicitly marked as approximate.
+
+7. **At the end of every description, add mandatory blocks:**
+
+```
+EXACT LABELS AND MARKINGS:
+- [list all clearly readable labels, marks, positions, designations]
+
+UNREADABLE / AMBIGUOUS FRAGMENTS:
+- [list fragments where data is partially readable or uncertain]
+
+CROSS-REFERENCES TO NODES / SHEETS / FRAGMENTS:
+- [list all references like "See node 1", "See sheet 5", "Detail A" etc.]
+```

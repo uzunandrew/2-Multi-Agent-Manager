@@ -122,10 +122,10 @@ Read `document.md` and `_output/structured_blocks.json`. Extract:
 | System not connected to ГЗШ (exists in building, absent from schematic) | Эксплуатационное | 0.6 |
 | No КУП in bathrooms | Эксплуатационное | 0.7 |
 | Lightning rods do not cover entire roof | Эксплуатационное | 0.6 |
-| Spacing between down conductors > 25 м | Рекомендательное | 0.5 |
-| Grounding resistance not specified | Рекомендательное | 0.6 |
-| No grounding calculation | Рекомендательное | 0.5 |
-| PE marking not mentioned | Рекомендательное | 0.5 |
+| Spacing between down conductors > 25 м | Эксплуатационное | 0.5 |
+| Grounding resistance not specified | Эксплуатационное | 0.6 |
+| No grounding calculation | Эксплуатационное | 0.5 |
+| PE marking not mentioned | Эксплуатационное | 0.5 |
 
 ## Execution Checklist
 

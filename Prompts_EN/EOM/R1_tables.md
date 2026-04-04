@@ -92,7 +92,7 @@ For heterogeneous consumers:
 
 - Pр.секции = Σ(Pр.ВРУ.i) × Кн.макс
 - Кн.макс — load diversity factor (коэффициент несовпадения максимумов, must be specified in the document)
-- **Check:** if Кн.макс is not specified — note in the checklist. Finding "Рекомендательное", `confidence: 0.5` — "Не указан коэффициент несовпадения максимумов при суммировании"
+- **Check:** if Кн.макс is not specified — note in the checklist. Finding "Экономическое", `confidence: 0.5` — "Не указан коэффициент несовпадения максимумов при суммировании"
 
 **3c. Emergency Mode:**
 
@@ -104,7 +104,7 @@ For heterogeneous consumers:
 
 - In general notes: "Расчетная мощность 970,1 кВт, Полная расчетная мощность 1046,5 кВА"
 - In the table: total for ГРЩ = ???
-- **Check:** do they match? Discrepancy > 5% → finding "Критическое". Discrepancy 2-5% → "Рекомендательное"
+- **Check:** do they match? Discrepancy > 5% → finding "Критическое". Discrepancy 2-5% → "Экономическое"
 
 ### Step 4: Verify Coefficients
 
@@ -126,7 +126,7 @@ For heterogeneous consumers:
 
 **How to use:**
 - If Кс in the document ≈ table value (±30%) → likely OK, the designer may have refined it per the specific edition
-- If Кс differs significantly (2x or more) → finding "Рекомендательное", `confidence: 0.6` — "Кс существенно отличается от ориентировочных значений, рекомендуется проверить методику расчёта"
+- If Кс differs significantly (2x or more) → finding "Экономическое", `confidence: 0.6` — "Кс существенно отличается от ориентировочных значений, рекомендуется проверить методику расчёта"
 - **Do NOT assign "Критическое"** solely due to discrepancy with this table
 
 **4b. cosφ by Load Type:**
@@ -142,13 +142,13 @@ Approximate ranges for identifying suspicious values:
 | Лифты | 0.60-0.85 | < 0.45 or > 0.95 |
 | ИТП (pumps + heating) | 0.85-0.97 | < 0.75 |
 
-- If cosφ is in the "suspicious" range → finding "Рекомендательное", `confidence: 0.5` — "cosφ = X для [load type] выходит за типичный диапазон, рекомендуется проверить"
+- If cosφ is in the "suspicious" range → finding "Экономическое", `confidence: 0.5` — "cosφ = X для [load type] выходит за типичный диапазон, рекомендуется проверить"
 - **Important:** the specific cosφ may be determined by the adjacent section technical assignment or equipment passport data. Do not make categorical judgments.
 
 **4c. Simultaneity Factor (Ко) and Load Diversity Factor (Кн.макс):**
 
 - These coefficients must be specified in the document if applied
-- If load summation does not specify coefficients and the total = simple sum → finding "Рекомендательное", `confidence: 0.5` — "При суммировании разнородных потребителей не указан коэффициент одновременности"
+- If load summation does not specify coefficients and the total = simple sum → finding "Экономическое", `confidence: 0.5` — "При суммировании разнородных потребителей не указан коэффициент одновременности"
 - Do not specify specific "correct" Ко values — they depend on the methodology
 
 ### Step 5: Full Equipment Specification Verification
@@ -227,26 +227,26 @@ If there is a CT verification table (usually on the diagram sheet), recalculate 
 
 ## How to Assess Severity
 
-**Principle:** "Критическое" only for pure arithmetic errors and factual discrepancies within the document. For discrepancies with reference tables — "Рекомендательное".
+**Principle:** "Критическое" only for pure arithmetic errors and factual discrepancies within the document. For discrepancies with reference tables — "Экономическое".
 
 | Situation | Category | confidence |
 |-----------|----------|-----------|
 | **Arithmetic (reliable checks):** | | |
 | Arithmetic error in Pр/Sр/Iр > 5% | Критическое | 0.9 |
 | ГРЩ total does not match text > 5% | Критическое | 0.9 |
-| ГРЩ total does not match text 2-5% | Рекомендательное | 0.7 |
+| ГРЩ total does not match text 2-5% | Экономическое | 0.7 |
 | Missing item in specification (present on diagram, absent in specification) | Экономическое | 0.85 |
 | Duplicate item in specification | Экономическое | 0.9 |
 | Quantity of breakers/CTs/meters: specification ≠ diagram | Экономическое | 0.85 |
 | **Coefficients (approximate checks):** | | |
-| Кс differs from reference by 2x or more | Рекомендательное | 0.6 |
-| cosφ in suspicious range | Рекомендательное | 0.5 |
-| Ко not specified during summation | Рекомендательное | 0.5 |
-| Sр.авар > Sном трансформатора | Рекомендательное | 0.6 |
+| Кс differs from reference by 2x or more | Экономическое | 0.6 |
+| cosφ in suspicious range | Экономическое | 0.5 |
+| Ко not specified during summation | Экономическое | 0.5 |
+| Sр.авар > Sном трансформатора | Эксплуатационное | 0.6 |
 | **Minor issues:** | | |
-| Discrepancy 2-5% in Pр/Iр | Рекомендательное | 0.6 |
-| CT oversized (meter at edge of range) | Рекомендательное | 0.6 |
-| Rounding error ≤ 2% | Рекомендательное | 0.4 |
+| Discrepancy 2-5% in Pр/Iр | Экономическое | 0.6 |
+| CT oversized (meter at edge of range) | Экономическое | 0.6 |
+| Rounding error ≤ 2% | Эксплуатационное | 0.4 |
 
 ## Execution Checklist
 

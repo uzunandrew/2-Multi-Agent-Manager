@@ -289,13 +289,21 @@ For instrument lists:
 [all instruments]
 ```
 
+## Complete reading failure
+
+If the image is entirely unreadable (rotation, low resolution, scanning artifacts, severe cropping), output ONLY:
+
+`READ ERROR: image unreadable. Reason: [rotation / low resolution / scanning artifacts / severe cropping]`
+
+Do not attempt to describe or guess content from an unreadable image.
+
 ## Rules
 
 1. **Main rule:** for each system (heating, DHW, ventilation, makeup), you MUST describe complete flow paths — from network inlet through equipment to system outlet. Do not describe equipment in isolation.
 
 2. **Pipe diameters:** always specify DN for every pipe section. For each connection — DN and type (welded/flanged/threaded).
 
-3. **If a parameter is not readable** on the image — write "not readable" instead of guessing.
+3. **If a parameter is not readable** on the image — write `[unreadable]` instead of guessing.
 
 4. **Equipment labeling:** record all designations (HE-1, P-1, CV-1, etc.) and their full descriptions.
 
@@ -317,3 +325,30 @@ For instrument lists:
 
 **Good:** "ITP independent scheme. Heating: plate HE Alfa Laval M6-MFG 350 kW, 150/70 → 95/70. Pumps: 2x Grundfos MAGNA3 40-80 (Q=8.5 m3/h, H=6.2 m), 1w+1s. Control valve: Danfoss VB2 DN40 Kvs=25, actuator AMV 435 0-10V. Safety valve DN25 Pset=6 bar. Expansion tank 80L diaphragm. DHW: 2-stage scheme, HE-1 (1st stage) 120 kW + HE-2 (2nd stage) 80 kW. DHW pump Grundfos UPS 25-60 x2. UUTE-1: Ultrasonic flow meter Kamstrup DN50, Pt500 paired sensors, calculator Multical 603, RS-485 to dispatch."
 --> Complete equipment list with parameters and connections
+
+## Accuracy standards
+
+1. **Describe only technically significant content.** Do not describe visual style, shadows, decorative graphics, line thickness, line/contour colors unless they carry engineering meaning. Exceptions: color coding per legend (e.g., red lines for fire systems, NCS/RAL codes).
+
+2. **Do not guess.** If a parameter, mark, dimension, node number, designation, sheet reference, or fragment is read with uncertainty — write `[unreadable]`.
+
+3. **Complete reading failure.** If the entire image is unreadable, output only: `READ ERROR: image unreadable. Reason: [rotation / low resolution / scanning artifacts / severe cropping]`
+
+4. **Preserve designations and units exactly as on the drawing.** Do not normalize or paraphrase marks, positions, DN/Ду, Ø, EI/REI, IP, kW, kVA, A, kA, cosφ, m², m³, l/s, Pa, °C and other designations.
+
+5. **If one image contains multiple entities** (plan + detail + table + notes), describe them under separate subheadings, do not mix into one block.
+
+6. **Do not measure dimensions from the image if they are not explicitly labeled.** Scale-based estimation is allowed only as low-confidence and must be explicitly marked as approximate.
+
+7. **At the end of every description, add mandatory blocks:**
+
+```
+EXACT LABELS AND MARKINGS:
+- [list all clearly readable labels, marks, positions, designations]
+
+UNREADABLE / AMBIGUOUS FRAGMENTS:
+- [list fragments where data is partially readable or uncertain]
+
+CROSS-REFERENCES TO NODES / SHEETS / FRAGMENTS:
+- [list all references like "See node 1", "See sheet 5", "Detail A" etc.]
+```

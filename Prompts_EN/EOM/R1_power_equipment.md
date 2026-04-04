@@ -120,8 +120,8 @@ If ЧП/ПЧ are used:
 | No temperature controller for heating | Эксплуатационное | 0.7 |
 | No УЗО on heating group | Эксплуатационное | 0.8 |
 | VFD power < motor power | Экономическое | 0.7 |
-| Panel IP does not match room type | Рекомендательное | 0.6 |
-| No spare groups in panel | Рекомендательное | 0.5 |
+| Panel IP does not match room type | Экономическое | 0.6 |
+| No spare groups in panel | Эксплуатационное | 0.5 |
 
 ## Execution Checklist
 

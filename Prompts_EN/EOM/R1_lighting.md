@@ -56,7 +56,7 @@ Methodology:
 1. For each luminaire type from the specification, determine installation location (from the plan or description)
 2. Find the luminaire IP (from the specification or manufacturer catalog)
 3. **Check:** IP ≥ minimum required?
-4. If IP is not specified in the document → finding "Рекомендательное" — "Не указана степень защиты"
+4. If IP is not specified in the document → finding "Экономическое" — "Не указана степень защиты" (affects procurement)
 5. If IP is specified and below required → finding "Эксплуатационное"
 
 ### Step 3: Power balance verification
@@ -67,7 +67,7 @@ Methodology:
 4. Compare total power with supply line/panel parameters:
    - Lighting power ≤ circuit breaker rating × U × cosφ?
    - If panel ЩНО is fed from ГРЩ — verify that the power is accounted for in the ГРЩ load table
-5. **Check:** is there a power margin? If not → finding "Рекомендательное"
+5. **Check:** is there a power margin? If not → note in checklist (this is a design choice, not a finding)
 
 ### Step 4: Control system verification
 
@@ -114,7 +114,7 @@ Reference norms per СП 52.13330.2016 (with amendments) for outdoor lighting:
 | Техэтаж | 50 |
 
 1. If the document specifies a calculated illuminance — compare with the norm
-2. If a lighting calculation is not performed / not attached → finding "Рекомендательное"
+2. If a lighting calculation is not performed / not attached → finding "Эксплуатационное", `confidence: 0.5`
 3. **Important:** these norms are reference values. The designer may have applied different values per the client's technical specifications.
 
 ### Step 6: Specification verification
@@ -135,9 +135,9 @@ Reference norms per СП 52.13330.2016 (with amendments) for outdoor lighting:
 | Number of DALI luminaires > 64 per line | Эксплуатационное | 0.8 |
 | Power discrepancy specification vs text > 5% | Экономическое | 0.8 |
 | Luminaire on plan missing from specification | Экономическое | 0.85 |
-| IP not specified | Рекомендательное | 0.7 |
-| No lighting calculation | Рекомендательное | 0.5 |
-| Missing position in specification numbering | Рекомендательное | 0.8 |
+| IP not specified | Экономическое | 0.7 |
+| No lighting calculation | Эксплуатационное | 0.5 |
+| Missing position in specification numbering | Экономическое | 0.8 |
 
 ## Execution checklist
 

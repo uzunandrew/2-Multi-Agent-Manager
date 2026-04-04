@@ -334,6 +334,14 @@ TOTALS (if present):
 [summary values]
 ```
 
+## Complete reading failure
+
+If the image is entirely unreadable (rotation, low resolution, scanning artifacts, severe cropping), output ONLY:
+
+`READ ERROR: image unreadable. Reason: [rotation / low resolution / scanning artifacts / severe cropping]`
+
+Do not attempt to describe or guess content from an unreadable image.
+
 ## Rules
 
 1. **Main rule:** for each element on the SGP, reference it to the building axes or plan coordinates. Do not describe elements without spatial reference.
@@ -342,13 +350,13 @@ TOTALS (if present):
 
 3. **Stages matter:** always identify which construction stage the SGP corresponds to. Different stages have different layouts.
 
-4. **If a parameter is not readable** on the image — write "not readable" instead of guessing.
+4. **If a parameter is not readable** on the image — write `[unreadable]` instead of guessing.
 
 5. **Quantities:** count all temporary buildings, gates, hydrants, cranes on the drawing.
 
 6. **Hazard zones:** specifically look for crane hazard zone boundaries, building drop zones, and any overlaps with public areas or adjacent properties.
 
-7. **Utility separations:** on the consolidated plan, measure or estimate horizontal separations between parallel utilities — these are the most commonly audited values.
+7. **Utility separations:** on the consolidated plan, record horizontal separations between parallel utilities only if explicitly dimensioned. Do not measure distances from the image unless explicitly dimensioned. Scale-based estimation is low-confidence and must be marked as approximate.
 
 ## Typical Description Errors (what to avoid)
 
@@ -360,3 +368,30 @@ TOTALS (if present):
 
 **Good:** "SGP main period stage 3 (superstructure). Tower crane Liebherr 132EC-H8 at axis E/6, boom reach 55m, hazard zone 62m radius. Temporary road width 6m (double-lane), ж/б slabs ПДН, ring layout, turning radius 12m at NE corner. 4 worker shelters (120 persons), canteen 60 seats at SE corner, 30m from building. Fire hydrant at entry gate, 15m from road."
 --> All key parameters with spatial reference
+
+## Accuracy standards
+
+1. **Describe only technically significant content.** Do not describe visual style, shadows, decorative graphics, line thickness, line/contour colors unless they carry engineering meaning. Exceptions: color coding per legend (e.g., red lines for fire systems, NCS/RAL codes).
+
+2. **Do not guess.** If a parameter, mark, dimension, node number, designation, sheet reference, or fragment is read with uncertainty — write `[unreadable]`.
+
+3. **Complete reading failure.** If the entire image is unreadable, output only: `READ ERROR: image unreadable. Reason: [rotation / low resolution / scanning artifacts / severe cropping]`
+
+4. **Preserve designations and units exactly as on the drawing.** Do not normalize or paraphrase marks, positions, DN/Ду, Ø, EI/REI, IP, kW, kVA, A, kA, cosφ, m², m³, l/s, Pa, °C and other designations.
+
+5. **If one image contains multiple entities** (plan + detail + table + notes), describe them under separate subheadings, do not mix into one block.
+
+6. **Do not measure dimensions from the image if they are not explicitly labeled.** Scale-based estimation is allowed only as low-confidence and must be explicitly marked as approximate.
+
+7. **At the end of every description, add mandatory blocks:**
+
+```
+EXACT LABELS AND MARKINGS:
+- [list all clearly readable labels, marks, positions, designations]
+
+UNREADABLE / AMBIGUOUS FRAGMENTS:
+- [list fragments where data is partially readable or uncertain]
+
+CROSS-REFERENCES TO NODES / SHEETS / FRAGMENTS:
+- [list all references like "See node 1", "See sheet 5", "Detail A" etc.]
+```

@@ -32,21 +32,21 @@ Each inspection has ONE owner. Other agents DO NOT duplicate this inspection.
 | Pump piping (manifolds, valves, vibration compensators) | pumps_fire |
 | Pump station drainage (floor drain, sump) | pumps_fire |
 | | |
-| Discrepancies between plan ↔ axonometric diagram ↔ specification (element presence) | bk_drawings |
-| Riser labeling across different sheets (consistency) | bk_drawings |
-| Diameter correspondence: plan vs axonometric vs specification | bk_drawings |
-| Sheet inventory (register vs actual presence) | bk_drawings |
-| Riser tie-in to axes (plan vs axonometric) | bk_drawings |
-| Title blocks and formatting | bk_drawings |
+| Discrepancies between plan ↔ axonometric diagram ↔ specification (element presence) | vk_drawings |
+| Riser labeling across different sheets (consistency) | vk_drawings |
+| Diameter correspondence: plan vs axonometric vs specification | vk_drawings |
+| Sheet inventory (register vs actual presence) | vk_drawings |
+| Riser tie-in to axes (plan vs axonometric) | vk_drawings |
+| Title blocks and formatting | vk_drawings |
 | | |
-| Pipe specification arithmetic (lengths by systems) | bk_tables |
-| Valve specification arithmetic (quantities) | bk_tables |
-| Diameter selection by flow rate (calculation check) | bk_tables |
-| Pipeline registers (totals, sums) | bk_tables |
-| Equipment specification (quantities, correspondence to drawings) | bk_tables |
+| Pipe specification arithmetic (lengths by systems) | vk_tables |
+| Valve specification arithmetic (quantities) | vk_tables |
+| Diameter selection by flow rate (calculation check) | vk_tables |
+| Pipeline registers (totals, sums) | vk_tables |
+| Equipment specification (quantities, correspondence to drawings) | vk_tables |
 | | |
-| Currency of СП 30.13330, СП 32.13330, СП 10.13130 | bk_norms |
-| Currency of ГОСТ for pipes and valves | bk_norms |
-| Content of norm clauses (per norms_paragraphs) | bk_norms |
-| Completeness of the normative base for section ВК | bk_norms |
-| Hierarchy of normative references (ФЗ > СП > ГОСТ) | bk_norms |
+| Currency of СП 30.13330, СП 32.13330, СП 10.13130 | vk_norms |
+| Currency of ГОСТ for pipes and valves | vk_norms |
+| Content of norm clauses (per norms_paragraphs) | vk_norms |
+| Completeness of the normative base for section ВК | vk_norms |
+| Hierarchy of normative references (ФЗ > СП > ГОСТ) | vk_norms |

@@ -299,15 +299,23 @@ For symbol legends:
 [list all symbols]
 ```
 
+## Complete reading failure
+
+If the image is entirely unreadable (rotation, low resolution, scanning artifacts, severe cropping), output ONLY:
+
+`READ ERROR: image unreadable. Reason: [rotation / low resolution / scanning artifacts / severe cropping]`
+
+Do not attempt to describe or guess content from an unreadable image.
+
 ## Rules
 
 1. **Main rule:** describe ALL elements visible on the drawing with their parameters. Do not summarize as "several trees" — count them.
 
 2. **Coordinates and dimensions** are critical for GP drawings. Always record numerical values for distances, elevations, coordinates when readable.
 
-3. **If a parameter is unreadable** on the image — write "not readable" instead of guessing.
+3. **If a parameter is unreadable** on the image — write `[unreadable]` instead of guessing.
 
-4. **Scale:** GP drawings are typically M1:500. All distances should be estimated using the scale if a ruler is not shown.
+4. **Scale:** GP drawings are typically M1:500. Do not measure distances from the image unless explicitly dimensioned. Scale-based estimation is low-confidence and must be marked as approximate.
 
 5. **Layer order in cross-sections:** always describe from top (surface) to bottom (subgrade).
 
@@ -319,3 +327,30 @@ For symbol legends:
 - "Pavement types are indicated" — list each type with area and location
 - "Utility networks are shown" — list each network with diameter and material
 - "Several manholes are present" — count and list designations (KK1, KK2, etc.)
+
+## Accuracy standards
+
+1. **Describe only technically significant content.** Do not describe visual style, shadows, decorative graphics, line thickness, line/contour colors unless they carry engineering meaning. Exceptions: color coding per legend (e.g., red lines for fire systems, NCS/RAL codes).
+
+2. **Do not guess.** If a parameter, mark, dimension, node number, designation, sheet reference, or fragment is read with uncertainty — write `[unreadable]`.
+
+3. **Complete reading failure.** If the entire image is unreadable, output only: `READ ERROR: image unreadable. Reason: [rotation / low resolution / scanning artifacts / severe cropping]`
+
+4. **Preserve designations and units exactly as on the drawing.** Do not normalize or paraphrase marks, positions, DN/Ду, Ø, EI/REI, IP, kW, kVA, A, kA, cosφ, m², m³, l/s, Pa, °C and other designations.
+
+5. **If one image contains multiple entities** (plan + detail + table + notes), describe them under separate subheadings, do not mix into one block.
+
+6. **Do not measure dimensions from the image if they are not explicitly labeled.** Scale-based estimation is allowed only as low-confidence and must be explicitly marked as approximate.
+
+7. **At the end of every description, add mandatory blocks:**
+
+```
+EXACT LABELS AND MARKINGS:
+- [list all clearly readable labels, marks, positions, designations]
+
+UNREADABLE / AMBIGUOUS FRAGMENTS:
+- [list fragments where data is partially readable or uncertain]
+
+CROSS-REFERENCES TO NODES / SHEETS / FRAGMENTS:
+- [list all references like "See node 1", "See sheet 5", "Detail A" etc.]
+```

@@ -256,13 +256,21 @@ For airflow tables:
 [all rows]
 ```
 
+## Complete reading failure
+
+If the image is entirely unreadable (rotation, low resolution, scanning artifacts, severe cropping), output ONLY:
+
+`READ ERROR: image unreadable. Reason: [rotation / low resolution / scanning artifacts / severe cropping]`
+
+Do not attempt to describe or guess content from an unreadable image.
+
 ## Rules
 
 1. **Main rule:** for each system, you MUST reference ducts/pipes to rooms and equipment. Do not describe routes without spatial reference.
 
 2. **Airflows and cross-sections:** always specify airflow (m³/h) and duct cross-section (a×b or Ø) for each section. For pipes — Ду and type (steel, PPR, copper, PE-Xa).
 
-3. **If a parameter is not readable** on the image — write "not readable" instead of guessing.
+3. **If a parameter is not readable** on the image — write `[unreadable]` instead of guessing.
 
 4. **System labeling:** record all designations (П1, В2, ПД1, ДУ1, ОТ1, ТП2, К1) and their meanings.
 
@@ -284,3 +292,30 @@ For airflow tables:
 
 **Good:** "System П1, airflow 5000 m³/h. Main duct 800×500 → branch 400×250 to room 201 (grille АМН 400×200, 300 m³/h) → branch 300×200 to room 202 (diffuser Ø160, 150 m³/h). Sound attenuator ШГ 800×500 L=900 after AHU. КПС-1 250×200 at wall penetration axis 3."
 --> All elements with parameters and location reference
+
+## Accuracy standards
+
+1. **Describe only technically significant content.** Do not describe visual style, shadows, decorative graphics, line thickness, line/contour colors unless they carry engineering meaning. Exceptions: color coding per legend (e.g., red lines for fire systems, NCS/RAL codes).
+
+2. **Do not guess.** If a parameter, mark, dimension, node number, designation, sheet reference, or fragment is read with uncertainty — write `[unreadable]`.
+
+3. **Complete reading failure.** If the entire image is unreadable, output only: `READ ERROR: image unreadable. Reason: [rotation / low resolution / scanning artifacts / severe cropping]`
+
+4. **Preserve designations and units exactly as on the drawing.** Do not normalize or paraphrase marks, positions, DN/Ду, Ø, EI/REI, IP, kW, kVA, A, kA, cosφ, m², m³, l/s, Pa, °C and other designations.
+
+5. **If one image contains multiple entities** (plan + detail + table + notes), describe them under separate subheadings, do not mix into one block.
+
+6. **Do not measure dimensions from the image if they are not explicitly labeled.** Scale-based estimation is allowed only as low-confidence and must be explicitly marked as approximate.
+
+7. **At the end of every description, add mandatory blocks:**
+
+```
+EXACT LABELS AND MARKINGS:
+- [list all clearly readable labels, marks, positions, designations]
+
+UNREADABLE / AMBIGUOUS FRAGMENTS:
+- [list fragments where data is partially readable or uncertain]
+
+CROSS-REFERENCES TO NODES / SHEETS / FRAGMENTS:
+- [list all references like "See node 1", "See sheet 5", "Detail A" etc.]
+```

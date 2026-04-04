@@ -161,7 +161,7 @@ Write the result to `_output/findings.json`:
   "step_4_categorization": {
     "done": true,
     "recategorized": 2,
-    "notes": "tables_003: Экономическое->Рекомендательное, drawings_008: Критическое->Экономическое"
+    "notes": "tables_003: Экономическое->Эксплуатационное, drawings_008: Критическое->Экономическое"
   },
   "step_5_confidence": {
     "done": true,

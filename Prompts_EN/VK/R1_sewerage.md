@@ -440,7 +440,7 @@ After all checks, add a `"checklist"` field to the output JSON:
 
 - Do not check water supply B1/T3/T4/T4c (that is the water_supply agent's task)
 - Do not check pump stations (that is the pumps_fire agent's task)
-- Do not recalculate specification arithmetic (that is the bk_tables agent's task)
-- Do not check discrepancies between drawings (that is the bk_drawings agent's task) -- you check only TECHNICAL solutions for sewerage
-- Do not check norm number currency (that is the bk_norms agent's task)
+- Do not recalculate specification arithmetic (that is the vk_tables agent's task)
+- Do not check discrepancies between drawings (that is the vk_drawings agent's task) -- you check only TECHNICAL solutions for sewerage
+- Do not check norm number currency (that is the vk_norms agent's task)
 - Do not analyze external networks DK1 (storm drainage, site drainage) -- only internal systems K1/K2

@@ -63,7 +63,7 @@ For each mention of parallel routing or crossing:
 Methodology:
 1. Find all distance mentions in the document
 2. **Check:** stated distances ≥ reference values?
-3. If distances are not specified at all (only "согласно ПУЭ") → finding "Рекомендательное"
+3. If distances are not specified at all (only "согласно ПУЭ") → finding "Эксплуатационное", `confidence: 0.5`
 4. **Important:** ПУЭ norms are a reference. For critical decisions, a reference to a current СП is needed.
 
 ### Step 4: Verify Installation Under Roads and Driveways
@@ -95,9 +95,9 @@ If an earthwork volume table exists:
 | Distance from utilities < norm | Эксплуатационное | 0.7 |
 | Arithmetic error in volumes > 10% | Экономическое | 0.85 |
 | Conduit diameter does not match cable | Экономическое | 0.7 |
-| Distances not specified ("согласно ПУЭ") | Рекомендательное | 0.5 |
-| No сигнальная лента in description | Рекомендательное | 0.5 |
-| Protective conduit type/diameter not specified | Рекомендательное | 0.6 |
+| Distances not specified ("согласно ПУЭ") | Эксплуатационное | 0.5 |
+| No сигнальная лента in description | Эксплуатационное | 0.5 |
+| Protective conduit type/diameter not specified | Экономическое | 0.6 |
 
 ## Execution Checklist
 

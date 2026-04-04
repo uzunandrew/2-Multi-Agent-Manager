@@ -47,7 +47,7 @@ For each transit line:
 3. **Checks:**
    - Rating not specified at all → finding "Эксплуатационное", `confidence: 0.7` — "Fire resistance rating not specified for transit line"
    - Rating specified but significantly below reference (e.g., EI30 instead of EI150) → finding, `confidence` depends on the gap
-   - Rating specified but no duct type/manufacturer stated → finding "Рекомендательное"
+   - Rating specified but no duct type/manufacturer stated → finding "Экономическое" (affects procurement)
 4. If a specific duct is stated — verify presence of a reference to documentation/certificate
 
 ### Step 3: Verification of Redundant Line Separation
@@ -110,7 +110,7 @@ Verification method for each line:
 3. Extract the index from the mark: ППГнг(А)-HF → HF, ВВГнг(А)-FRLS → FRLS
 4. **Check:** for СПЗ system lines — is the FR index (fire resistance) present?
    - Cable нг(А)-LS/HF (without FR) on an ОПС/СОУЭ line → finding "Критическое", `confidence: 0.9`
-   - Cable with FR but not standard FRLS/FRHF → finding "Рекомендательное" — "Verify fire resistance certificate confirmation"
+   - Cable with FR but not standard FRLS/FRHF → finding "Эксплуатационное" — "Verify fire resistance certificate confirmation"
 5. **Consistency check:** mark in general notes = mark in specification? Discrepancy → finding
 
 ### Step 5: Verification of Cable Penetrations Through Fire Barriers
@@ -168,7 +168,7 @@ Autonomous operation time requirements are determined by the current edition of 
 
 **Important:** specific requirements may differ depending on the edition of СП 484 with amendments. Do not set a hard violation by specific clause — phrase it as a question.
 
-- **Check:** if ИБП is mentioned — are autonomous operation parameters specified? If not → finding "Рекомендательное", `confidence: 0.7`
+- **Check:** if ИБП is mentioned — are autonomous operation parameters specified? If not → finding "Эксплуатационное", `confidence: 0.7`
 - **Check:** if parameters are specified — are they reasonable for this type of facility?
 
 ### Step 7: Verification of Room Categories and Protection Ratings
@@ -183,8 +183,8 @@ Autonomous operation time requirements are determined by the current edition of 
 | А, Б (explosion-hazardous) | Ex-rated | Explosion protection |
 
 For each room with electrical equipment:
-1. Is the category specified? If not → finding "Рекомендательное"
-2. Is the protection rating (IP) specified? If not → finding "Рекомендательное"
+1. Is the category specified? If not → finding "Эксплуатационное"
+2. Is the protection rating (IP) specified? If not → finding "Экономическое" (affects equipment procurement)
 3. IP ≥ minimum for the given category? If IP31 with category В2 → finding "Критическое"
 4. Document says "ГРЩ — IP31" → verify that the ГРЩ room = В4 or Д (then IP31 is OK)
 
@@ -193,10 +193,10 @@ For each room with electrical equipment:
 For underground parking, a separate СП 506.1311500.2021 applies (in addition to СП 6.13130.2021). Room category is determined per СП 12.13130.
 
 1. Category depends on design decisions (ventilation availability, fire suppression, parking type)
-2. **Check:** is the parking room category specified in the document? If not → finding "Рекомендательное"
+2. **Check:** is the parking room category specified in the document? If not → finding "Эксплуатационное"
 3. **Check:** if specified — does the electrical equipment protection rating (IP) match this category?
 4. **Check:** are parking ventilation interlocks with the electrical supply system mentioned in the document? (CO monitoring, automatic activation of emergency ventilation)
-5. If interlocks are not mentioned → finding "Рекомендательное", `confidence: 0.6` — "Recommend verifying parking ventilation interlocks"
+5. If interlocks are not mentioned → finding "Эксплуатационное", `confidence: 0.6` — "Recommend verifying parking ventilation interlocks"
 
 ## Severity Assessment Guide
 
@@ -209,11 +209,11 @@ For underground parking, a separate СП 506.1311500.2021 applies (in addition t
 | Duct fire resistance significantly below reference (EI30 instead of EI150) | Эксплуатационное | 0.7 |
 | Equipment IP below minimum for the stated room category | Эксплуатационное | 0.8 |
 | Penetration without stated fire resistance rating | Эксплуатационное | 0.7 |
-| Fire-resistant duct type/manufacturer not specified | Рекомендательное | 0.7 |
-| ИБП for ОПС without autonomous operation parameters | Рекомендательное | 0.7 |
-| Line separation described in text but not visible on plan | Рекомендательное | 0.6 |
-| Room category not specified | Рекомендательное | 0.6 |
-| Parking ventilation interlocks not mentioned | Рекомендательное | 0.6 |
+| Fire-resistant duct type/manufacturer not specified | Экономическое | 0.7 |
+| ИБП for ОПС without autonomous operation parameters | Эксплуатационное | 0.7 |
+| Line separation described in text but not visible on plan | Эксплуатационное | 0.6 |
+| Room category not specified | Эксплуатационное | 0.6 |
+| Parking ventilation interlocks not mentioned | Эксплуатационное | 0.6 |
 | Emergency lighting without ≥ 3h autonomy | Эксплуатационное | 0.7 |
 | Working and emergency lighting on the same tray | Эксплуатационное | 0.7 |
 | No "ВЫХОД" signs on evacuation routes | Эксплуатационное | 0.6 |

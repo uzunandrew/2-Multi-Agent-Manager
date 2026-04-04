@@ -50,14 +50,14 @@ Read `norms/norms_db.json`. For each norm from Step 1:
    - Other → there may be a new amendment/edition
 
 4. Check `notes` — often contains important information:
-   - "Действует с изменениями №1-3" → document references it without mentioning amendments? → finding "Рекомендательное"
+   - "Действует с изменениями №1-3" → document references it without mentioning amendments? → finding "Эксплуатационное"
    - "Частично заменён" → need to check which sections are superseded
 
 **If the norm is not in the database:**
 - Record in the checklist: "не найдена в norms_db.json"
 - Set `norm_confidence: 0.5`
 - Wording: "Не удалось подтвердить актуальность [designation]" (NOT "норма устарела")
-- This is a "Рекомендательное" finding — not "Критическое"
+- This is an "Эксплуатационное" finding — not "Критическое"
 
 ### Step 3: Verify Specific Clauses
 
@@ -106,7 +106,7 @@ Table of parallel references (most common):
 
 For each ПУЭ reference:
 1. Does the document contain a parallel reference to a СП? → OK
-2. No parallel reference, but ПУЭ is used as a supplementary reference → finding "Рекомендательное"
+2. No parallel reference, but ПУЭ is used as a supplementary reference → finding "Эксплуатационное"
 3. ПУЭ is the sole justification for a critical decision (cross-section selection, grounding, protection) → finding "Эксплуатационное" (a reference to an active СП is needed)
 
 ### Step 5: Check Completeness of the Normative Framework
@@ -117,10 +117,10 @@ For the EM section (electrical supply of residential buildings), references to k
 
 | Document | Purpose | If absent |
 |----------|---------|-----------|
-| СП 256.1325800.2016 (with amendments) | Primary standard for electrical installations of residential buildings | Рекомендательное — "В перечне нормативных документов не указан основной СП для электроустановок жилых зданий" |
-| СП 6.13130.2021 | Fire safety of electrical equipment | Рекомендательное |
-| ФЗ №123-ФЗ | Technical regulation on fire safety | Рекомендательное |
-| ГОСТ Р 21.101-2020 | СПДС, documentation formatting | Рекомендательное |
+| СП 256.1325800.2016 (with amendments) | Primary standard for electrical installations of residential buildings | Эксплуатационное — "В перечне нормативных документов не указан основной СП для электроустановок жилых зданий" |
+| СП 6.13130.2021 | Fire safety of electrical equipment | Эксплуатационное |
+| ФЗ №123-ФЗ | Technical regulation on fire safety | Эксплуатационное |
+| ГОСТ Р 21.101-2020 | СПДС, documentation formatting | Эксплуатационное |
 
 **Other typical documents (absence is not a finding, but useful to note):**
 - СП 76.13330.2016 — electrical devices
@@ -158,12 +158,12 @@ This hierarchy is a general guideline, not a strict rejection rule. If a documen
 | Reference to a cancelled norm (status: cancelled), confirmed via norms_db | Критическое | 0.95 |
 | Reference to a superseded norm, if the replacement document contains significant changes | Экономическое | 0.8 |
 | Incorrect clause number (content does not match), confirmed via norms_paragraphs | Экономическое | 0.8 |
-| Reference to a superseded norm without significant changes (formal replacement) | Рекомендательное | 0.7 |
-| ПУЭ is the sole justification for a critical decision, without confirmation in СП/ГОСТ | Рекомендательное | 0.6 |
+| Reference to a superseded norm without significant changes (formal replacement) | Эксплуатационное | 0.7 |
+| ПУЭ is the sole justification for a critical decision, without confirmation in СП/ГОСТ | Эксплуатационное | 0.6 |
 | ГОСТ 13109-97 instead of ГОСТ 32144-2013 | Эксплуатационное | 0.9 |
-| Key document (СП 256, СП 6.13130) not mentioned in the list of norms | Рекомендательное | 0.5 |
-| Incomplete reference (no year / title) | Рекомендательное | 0.7 |
-| Reference without clause number when justifying a specific decision | Рекомендательное | 0.5 |
+| Key document (СП 256, СП 6.13130) not mentioned in the list of norms | Эксплуатационное | 0.5 |
+| Incomplete reference (no year / title) | Эксплуатационное | 0.7 |
+| Reference without clause number when justifying a specific decision | Эксплуатационное | 0.5 |
 
 ## Execution Checklist
 

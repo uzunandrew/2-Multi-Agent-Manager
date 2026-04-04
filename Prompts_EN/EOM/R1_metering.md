@@ -112,9 +112,9 @@ For each meter:
 | ТТ fails emergency mode check | Экономическое | 0.7 |
 | Different meter interfaces (RS-485 vs RF) | Эксплуатационное | 0.6 |
 | No ИКК on commercial metering | Эксплуатационное | 0.7 |
-| ТТ accuracy class not specified | Рекомендательное | 0.6 |
-| Sub-subscriber meter not provided | Рекомендательное | 0.5 |
-| АСКУЭ not described | Рекомендательное | 0.5 |
+| ТТ accuracy class not specified | Экономическое | 0.6 |
+| Sub-subscriber meter not provided | Эксплуатационное | 0.5 |
+| АСКУЭ not described | Эксплуатационное | 0.5 |
 
 ## Execution Checklist
 

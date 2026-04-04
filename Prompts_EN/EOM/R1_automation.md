@@ -93,9 +93,9 @@ If the project includes АВР for the lighting panel:
 | Control logic on schematic does not match scenario description | Эксплуатационное | 0.7 |
 | XT1/XT2 terminals not aligned with the number of groups/scenarios | Эксплуатационное | 0.7 |
 | АСУД requirements not formulated ("to be clarified") | Эксплуатационное | 0.6 |
-| No backup astronomical relay when a single one serves all groups | Рекомендательное | 0.5 |
-| Relay/contactor model not specified | Рекомендательное | 0.6 |
-| No assignment for adjacent АСУД section | Рекомендательное | 0.5 |
+| No backup astronomical relay when a single one serves all groups | Эксплуатационное | 0.5 |
+| Relay/contactor model not specified | Экономическое | 0.6 |
+| No assignment for adjacent АСУД section | Эксплуатационное | 0.5 |
 | Terminal number mismatch between text and schematic | Экономическое | 0.8 |
 
 ## Execution Checklist

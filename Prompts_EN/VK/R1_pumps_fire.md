@@ -476,8 +476,8 @@ After all checks, add a `"checklist"` field to the output JSON:
 
 - Do not check water supply pipelines outside the pump station (that is the water_supply agent's task)
 - Do not check sewerage (that is the sewerage agent's task)
-- Do not recalculate specification arithmetic (that is the bk_tables agent's task)
-- Do not check discrepancies between drawings (that is the bk_drawings agent's task)
-- Do not check norm number currency (that is the bk_norms agent's task)
+- Do not recalculate specification arithmetic (that is the vk_tables agent's task)
+- Do not check discrepancies between drawings (that is the vk_drawings agent's task)
+- Do not check norm number currency (that is the vk_norms agent's task)
 - Do not check external fire water supply networks -- only internal VPV and pump station
 - Do not duplicate pump power supply checks (that is section EOM)

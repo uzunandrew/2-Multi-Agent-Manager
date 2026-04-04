@@ -82,11 +82,11 @@ Write your result to `_output/partial_<your_name>.json` using the Write tool. Fo
 
 ## Working with Sliced Context
 
-You receive a **slice of document.md** — not the entire document, but only the sheets relevant to your specialization. The orchestrator selects sheets by category and passes them into your prompt.
+You receive a **slice of document_enriched.md** — not the entire document, but only the sheets relevant to your specialization. The orchestrator selects sheets by category and passes them into your prompt. This single file contains both the document text and structured drawing descriptions (IMAGE blocks replaced with Vision data).
 
 **Rules:**
-1. Work with what you have been given. DO NOT attempt to read `document.md` via the Read tool — all necessary data is already in your context
-2. `structured_blocks.json`, `norms_db.json`, `norms_paragraphs.json` — are also embedded in your context
+1. Work with what you have been given. DO NOT attempt to read files via the Read tool — all necessary data is already in your context
+2. `norms_db.json`, `norms_paragraphs.json` — are also embedded in your context
 3. If you **lack data** to complete a step (e.g., the cable journal is missing but needed) — **do not guess and do not silently skip the step**. Fill in the `missing_data` field in the checklist:
 
 ```json

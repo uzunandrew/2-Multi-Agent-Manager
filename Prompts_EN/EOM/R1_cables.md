@@ -43,7 +43,7 @@ For each cable line:
    - Group installation, single/in conduit/in trunking — derating coefficients depend on specific conditions (0.6-1.0)
 5. **Assessment:**
    - Iрасч ≤ 0.7 × Iдоп (approx.) → most likely OK, sufficient margin, `confidence: 0.3`
-   - Iрасч ≈ 0.8-1.0 × Iдоп (approx.) → borderline case, depends on correction factors. Finding "Рекомендательное", `confidence: 0.5` — "Рекомендуется проверить выбор сечения с учётом условий прокладки"
+   - Iрасч ≈ 0.8-1.0 × Iдоп (approx.) → borderline case, depends on correction factors. Finding "Экономическое", `confidence: 0.5` — "Рекомендуется проверить выбор сечения с учётом условий прокладки"
    - Iрасч > Iдоп (approx.) → probable issue. Finding "Критическое" only if significantly exceeded (>20%), otherwise "Экономическое", `confidence: 0.7-0.9`
    - Iрасч > 1.5 × Iдоп (approx.) → clear non-compliance. Finding "Критическое", `confidence: 0.95`
 6. **Always state in the finding description:** "Оценка по ориентировочным значениям Iдоп. Фактический допустимый ток зависит от конструкции кабеля, условий прокладки и поправочных коэффициентов."
@@ -63,7 +63,7 @@ Approximate values of Jэк (copper):
 - Паркинг → 4000-5000 ч/год
 - Наружное освещение → 2000-2500 ч/год
 
-Sэк = Iрасч / Jэк. If the actual сечение differs from Sэк by 2+ standard steps → finding **"Рекомендательное"** (not "Экономическое"), `confidence: 0.5`. This is a signal, not a violation.
+Sэк = Iрасч / Jэк. If the actual сечение differs from Sэк by 2+ standard steps → finding **"Экономическое"**, `confidence: 0.5`. This is an economic signal — potential overexpenditure on cable.
 
 ### Step 3: Breaker-Cable Coordination Check
 
@@ -88,7 +88,7 @@ These breakers have electronic trip units with adjustable settings:
 You CANNOT verify the settings, as they are configured during commissioning. But you can check:
 - Is the breaker rating reasonable for the given load? (Iном > Iрасч.авар — for emergency mode)
 - Does the document mention the need to configure trip units? (Notes like "с селективной задержкой")
-- If the breaker rating is 3+ times the design current → finding "Рекомендательное" — "Проверить выбор номинала и уставки расцепителя"
+- If the breaker rating is 3+ times the design current → finding "Экономическое" — "Проверить выбор номинала и уставки расцепителя" (overexpenditure on breaker)
 
 **3c. For household breakers (up to 125А, characteristics B/C/D):**
 
@@ -103,7 +103,7 @@ Applicable ONLY to group lines and small consumer breakers:
 Check whether the characteristic matches the load type:
 - LED lighting (group switching of 10+ luminaires): inrush currents from driver capacitor charging — characteristic B may trip spuriously → C is needed
 - Pump motors: starting current 5-7 × Iном → characteristic B will trip → C or D is needed
-- If the characteristic is NOT specified on the diagram — this is itself a finding "Рекомендательное"
+- If the characteristic is NOT specified on the diagram — this is itself a finding "Экономическое" (affects procurement)
 
 ### Step 4: Cable Mark Verification
 
@@ -129,7 +129,7 @@ For each автомат, if the short-circuit current at the busbar is shown on 
 1. Find Iкз(3) at the busbar (from structured_blocks.json)
 2. Find the breaker's breaking capacity Ics (from type: ВА-731 → Ics=50кА, ВА-335А → Ics=35кА — approximate)
 3. **Check:** Ics ≥ Iкз(3)? If not → finding "Эксплуатационное"
-4. **Important:** exact Ics values depend on the modification. If data is insufficient → finding "Рекомендательное" with `confidence: 0.5`
+4. **Important:** exact Ics values depend on the modification. If data is insufficient → note in checklist, do not create a finding
 
 **6b. Total voltage drop:**
 
@@ -140,7 +140,7 @@ For lines with long cables (>50 m):
    - ГРЩ → ВРУ: ΔU2
    - ВРУ → ЩО: ΔU3
    - Σ = ΔU1 + ΔU2 + ΔU3 ≤ 5%
-3. If total losses > 5% → finding "Рекомендательное", `confidence: 0.5` — "Рекомендуется проверить суммарные потери напряжения по цепочке"
+3. If total losses > 5% → finding "Эксплуатационное", `confidence: 0.5` — "Рекомендуется проверить суммарные потери напряжения по цепочке"
 
 ### Step 7: Cross-Document Discrepancy Check
 
@@ -160,11 +160,11 @@ Any factual discrepancy between them → finding. These are the most reliable fi
 | Iном автомата > Iдоп кабеля (with margin >20%) | Критическое | 0.8-0.9 |
 | Iрасч > Iдоп (approx.) up to 20% — borderline case | Экономическое | 0.5-0.7 |
 | Discrepancy in марка/сечение between diagram and specification | Экономическое | 0.9 |
-| Power breaker rating > 3× design current | Рекомендательное | 0.5 |
-| Cable сечение far exceeds economically optimal | Рекомендательное | 0.5 |
-| Installation method not specified | Рекомендательное | 0.8 |
-| Characteristic B/C/D not specified on diagram | Рекомендательное | 0.7 |
-| Typo in cable марка | Рекомендательное | 0.9 |
+| Power breaker rating > 3× design current | Экономическое | 0.5 |
+| Cable сечение far exceeds economically optimal | Экономическое | 0.5 |
+| Installation method not specified | Экономическое | 0.8 |
+| Characteristic B/C/D not specified on diagram | Экономическое | 0.7 |
+| Typo in cable марка | Экономическое | 0.9 |
 
 ## Execution Checklist
 
@@ -236,7 +236,7 @@ For each step, specify:
 
 ## What NOT To Do
 
-- Do not assign "Критическое" for borderline discrepancies — use "Экономическое" or "Рекомендательное" with confidence indication
+- Do not assign "Критическое" for borderline discrepancies — use "Экономическое" or "Эксплуатационное" with confidence indication
 - Do not apply B/C/D characteristics to power breakers with electronic trip units
 - Do not use approximate Iдоп tables as absolute truth — always indicate the assessment is approximate
 - Do not check fire alarm and СОУЭ systems (this is the fire_safety agent's responsibility)

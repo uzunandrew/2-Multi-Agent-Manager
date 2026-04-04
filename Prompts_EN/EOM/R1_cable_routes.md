@@ -46,7 +46,7 @@ For each лоток/короб, determine which cables are routed in it (from no
    - ≤ 35% if future capacity reserve is needed
    - **Check:** fill rate ≤ 40%?
    - If > 50% → finding "Эксплуатационное"
-   - If > 40% and ≤ 50% → finding "Рекомендательное"
+   - If > 40% and ≤ 50% → finding "Эксплуатационное", `confidence: 0.5`
 
 **Important:** fill rate calculation is approximate. Exact calculation depends on specific cable brands and installation method.
 
@@ -70,7 +70,7 @@ For each лоток/короб, determine which cables are routed in it (from no
 
 ### Step 5: Mounting Node Verification
 
-From `_output/structured_blocks.json` for each node:
+From the IMAGE block descriptions in `document_enriched.md`, for each node:
 
 1. **Suspension rods (шпильки подвеса):**
    - Spacing between шпильки indicated?
@@ -109,10 +109,10 @@ From `_output/structured_blocks.json` for each node:
 | Power and слаботочные in one лоток | Эксплуатационное | 0.7 |
 | Dimensions on plan ≠ specification | Экономическое | 0.8 |
 | Internal size of короб < лоток with cables | Экономическое | 0.7 |
-| Tray fill rate 40-50% | Рекомендательное | 0.5 |
-| Spacing between шпильки not indicated | Рекомендательное | 0.5 |
-| Отметки низа not indicated | Рекомендательное | 0.5 |
-| Вентрешётки in короб not provided | Рекомендательное | 0.4 |
+| Tray fill rate 40-50% | Эксплуатационное | 0.5 |
+| Spacing between шпильки not indicated | Эксплуатационное | 0.5 |
+| Отметки низа not indicated | Эксплуатационное | 0.5 |
+| Вентрешётки in короб not provided | Эксплуатационное | 0.4 |
 
 ## Execution Checklist
 
