@@ -8,9 +8,17 @@ Before starting the analysis, determine the project type:
 - **OUTDOOR** (наружное): if the project contains "наружное освещение", "территория", "ГП5", "ландшафт" → apply outdoor lighting norms and IP ratings
 - **INDOOR** (внутреннее): if the project contains "внутреннее освещение", "ЭО1", "ЭО2", "паркинг", "корпус" → apply indoor lighting norms and IP ratings
 
+## Applicability filter
+
+If the provided document slice contains **no lighting plans** (sheets categorized as `lighting_plan`, `facade_plan`) — return `not_applicable`:
+
+```json
+{"agent": "lighting", "status": "not_applicable", "reason": "No lighting plans found in the provided document slice"}
+```
+
 ## IMPORTANT: Execution rules
 
-1. You MUST complete ALL steps from 1 to 6 sequentially. No step may be skipped.
+1. You MUST complete ALL steps from 1 to 5 sequentially. No step may be skipped.
 2. At each step, check EVERY element, not selectively.
 3. Do not stop after the first findings — continue to the end of the document.
 4. After all steps, fill in the execution checklist (at the end).
@@ -24,7 +32,7 @@ You are an auditor, not a judge. Formulate findings with a `confidence` rating. 
 
 ### Step 1: Data collection
 
-Read `document.md` and `_output/structured_blocks.json`. Extract:
+Read `document_enriched.md`. Extract:
 - All luminaire types (name, manufacturer, power, light source type, optics, control, IP)
 - Lighting equipment specifications (quantity, total power)
 - Object type: outdoor territory lighting / roof / indoor / facade
@@ -117,14 +125,6 @@ Reference norms per СП 52.13330.2016 (with amendments) for outdoor lighting:
 2. If a lighting calculation is not performed / not attached → finding "Эксплуатационное", `confidence: 0.5`
 3. **Important:** these norms are reference values. The designer may have applied different values per the client's technical specifications.
 
-### Step 6: Specification verification
-
-1. Are all luminaires from the plans listed in the specification?
-2. Does the quantity on the plan = quantity in the specification?
-3. Are all accessory types listed (опоры, кронштейны, стаканы монтажные)?
-4. Are there any missing positions (numbering: 1,2,3,5,7... — where are 4,6?)
-5. Units of measurement: power in Вт, quantity in шт
-
 ## How to assess severity
 
 | Situation | Category | confidence |
@@ -134,10 +134,8 @@ Reference norms per СП 52.13330.2016 (with amendments) for outdoor lighting:
 | DALI controllers / PSU "уточнить" — incomplete design | Эксплуатационное | 0.7 |
 | Number of DALI luminaires > 64 per line | Эксплуатационное | 0.8 |
 | Power discrepancy specification vs text > 5% | Экономическое | 0.8 |
-| Luminaire on plan missing from specification | Экономическое | 0.85 |
 | IP not specified | Экономическое | 0.7 |
 | No lighting calculation | Эксплуатационное | 0.5 |
-| Missing position in specification numbering | Экономическое | 0.8 |
 
 ## Execution checklist
 
@@ -175,12 +173,6 @@ Reference norms per СП 52.13330.2016 (with amendments) for outdoor lighting:
     "done": true,
     "calculation_present": false,
     "notes": "Светотехнический расчёт не приложен"
-  },
-  "step_6_spec": {
-    "done": true,
-    "positions_checked": 15,
-    "missing": 0,
-    "notes": ""
   }
 }
 ```
@@ -189,5 +181,8 @@ Reference norms per СП 52.13330.2016 (with amendments) for outdoor lighting:
 
 - Do not check cable cross-sections by current load (that is the cables agent)
 - Do not check fire safety requirements (that is the fire_safety agent)
+- Do not check emergency/evacuation lighting (that is the fire_safety agent)
 - Do not check norm document validity (that is the norms agent)
 - Do not visually analyze drawings for discrepancies (that is the drawings agent)
+- Do not check discrepancies between sources — plan vs specification (that is the consistency agent)
+- Do not flag missing position numbers in specification numbering (this is not a finding)

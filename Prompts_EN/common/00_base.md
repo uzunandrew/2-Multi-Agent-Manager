@@ -13,8 +13,8 @@ Each data type has one authoritative source. Do not mix them:
 | Data Type | Source | Note |
 |-----------|--------|------|
 | Document text + drawing descriptions | Slice of `document_enriched.md` (embedded in the prompt) | Single file: text + Vision descriptions replacing IMAGE blocks |
-| Status and revision of regulatory documents | `norms/norms_db.json` | The only source for norm status |
-| Verified paragraph quotes from norms | `norms/norms_paragraphs.json` | The only source for paragraph content |
+| Status and revision of regulatory documents | `norms/norms_db.json` | Used ONLY by the `norms` agent. Other agents do NOT receive this file |
+| Verified paragraph quotes from norms | `norms/norms_paragraphs.json` | Used ONLY by the `norms` agent. Other agents do NOT receive this file |
 
 ## Output JSON Format
 
@@ -36,7 +36,7 @@ Write your result to `_output/partial_<your_name>.json` using the Write tool. Fo
         {"type": "image", "block_id": "BLOCK_ID", "source": "Description from structured_blocks"}
       ],
       "norm_ref": "СП XXX, п. X.X.X",
-      "norm_quote": "Exact quote of the norm paragraph",
+      "norm_quote": "",
       "norm_confidence": 0.95,
       "confidence": 0.85,
       "recommendation": "Specific corrective action"
@@ -45,6 +45,24 @@ Write your result to `_output/partial_<your_name>.json` using the Write tool. Fo
   "checklist": {}
 }
 ```
+
+### Hard Checks and Soft Checks
+
+- **Hard checks** → `findings[]` — only confirmed problems with concrete evidence
+- **Soft checks** → `checklist.notes` or `checklist.questions` — tentative signals, questions for the designer, recommendations without a mandatory regulatory basis
+
+## Check Types
+
+Each check belongs to one of 4 types. The type determines the sole owner.
+
+| Check Type | Sole Owner | Description |
+|---|---|---|
+| Consistency — literal parameter discrepancy between sources | `consistency` | The same parameter differs across text, schema, plan, specification |
+| Arithmetic — recalculation of formulas, totals, coefficients | `tables` | Error is discovered through mathematical recalculation |
+| Engineering correctness — adequacy of the solution in the domain area | domain R1 agent | The solution is technically incorrect per norms or engineering practice |
+| Norm status — document currency, paragraph correctness | `norms` | Norm is cancelled/replaced, paragraph is cited incorrectly |
+
+If a check does not fall within your zone by type — record the result in `checklist.notes`, but **do not** create a finding.
 
 ## Finding Categories
 
@@ -65,8 +83,11 @@ Write your result to `_output/partial_<your_name>.json` using the Write tool. Fo
 - OCR artifacts ("Cable palace", "Abrasive lighting")
 - Unprocessed coefficients with 15 decimal places (cosmetic)
 - Discrepancies within rounding tolerance (<=2%)
-- Sheet numbering, item order in specifications
 - Vision agent errors in drawing interpretation
+- Title blocks, project codes, sheet names, revision marks
+- Numbering and item order in specifications
+- Legends and symbol keys
+- Formatting cosmetics
 
 **Principle:** if the issue will not lead to financial loss, reduced safety, or problems during installation/operation — it is NOT a finding.
 
@@ -80,13 +101,19 @@ Write your result to `_output/partial_<your_name>.json` using the Write tool. Fo
 6. Norm priority: ФЗ -> Technical regulations -> СП mandatory -> СП voluntary -> ГОСТ -> ПУЭ
 7. When referencing ПУЭ-7 to justify critical decisions — support it with a parallel reference to a current СП/ГОСТ
 
+## Applicability Filter
+
+Before starting your checks, determine whether your role is applicable to the given slice:
+- If the slice contains no data necessary for your steps — return `not_applicable: true` in the checklist and finish.
+- If the data is present — proceed with all steps.
+
 ## Working with Sliced Context
 
 You receive a **slice of document_enriched.md** — not the entire document, but only the sheets relevant to your specialization. The orchestrator selects sheets by category and passes them into your prompt. This single file contains both the document text and structured drawing descriptions (IMAGE blocks replaced with Vision data).
 
 **Rules:**
 1. Work with what you have been given. DO NOT attempt to read files via the Read tool — all necessary data is already in your context
-2. `norms_db.json`, `norms_paragraphs.json` — are also embedded in your context
+2. `norms_db.json` and `norms_paragraphs.json` are **NOT** in your context (unless you are the `norms` agent). Norm status verification is handled exclusively by the `norms` agent
 3. If you **lack data** to complete a step (e.g., the cable journal is missing but needed) — **do not guess and do not silently skip the step**. Fill in the `missing_data` field in the checklist:
 
 ```json
@@ -103,12 +130,17 @@ You receive a **slice of document_enriched.md** — not the entire document, but
 4. If `missing_data` is empty — do not include it in the JSON (it means all necessary data is available)
 5. Page numbering and `## СТРАНИЦА` markers in the slice are preserved from the original — use them for `evidence.source`
 
-## Norm Verification Rule
+## Norm Reference Rule
 
-**The status, revision, and paragraph content of a norm are considered UNVERIFIED until checked against `norms_db.json` and `norms_paragraphs.json`.**
+**You do NOT have access to `norms_db.json` or `norms_paragraphs.json`.** Norm status verification is the exclusive responsibility of the `norms` agent.
 
-- If the norm is found in `norms_db.json` and `status: active` -> you may set `norm_confidence` based on your own certainty
-- If the norm is NOT found in the database -> set `norm_confidence: 0.5`, phrase it as "Unable to confirm the norm is current"
-- If the norm paragraph is NOT found in `norms_paragraphs.json` -> set `norm_confidence: 0.5`, phrase it as "Unable to confirm paragraph content"
-- **DO NOT rely on your own memory of norm content** — use only verified data from the database
-- DO NOT fabricate paragraph numbers — if unverified, honestly indicate `norm_confidence: 0.5`
+When referencing a norm in your finding:
+- Set `norm_ref` to the norm designation and paragraph number you believe applies
+- Set `norm_quote` to `""` (empty) — the synthesizer will fill in verified quotes from the database
+- Set `norm_confidence` based on your own certainty:
+  - `0.9-1.0` — you are confident in the norm and paragraph number
+  - `0.7-0.8` — you are fairly sure but the paragraph number may be imprecise
+  - `0.5` — you are unsure, the norm may be outdated or the paragraph number may be wrong
+- DO NOT fabricate paragraph numbers — if unsure, set `norm_confidence: 0.5` and state "paragraph number needs verification"
+- DO NOT attempt to quote norm paragraphs from memory — leave `norm_quote` empty
+- The `norms` agent will independently verify all norm references; the synthesizer (R3) will enrich findings with verified quotes from `norms_paragraphs.json`

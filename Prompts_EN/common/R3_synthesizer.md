@@ -14,6 +14,7 @@ You are the final arbiter of the audit. You collect results from all agents and 
 - `_output/filtered_findings.json` — accepted findings (pass + pass_weak_norm), prepared by the orchestrator
 - `_output/review.json` — verdicts and reasoning from the critic
 - `_output/rejected.json` — rejected findings (for reference and statistics)
+- `norms/norms_paragraphs.json` — verified paragraph quotes for enriching findings with norm citations
 
 ## Workflow
 
@@ -78,7 +79,20 @@ Each finding from an agent has a `confidence` field (if the agent specified it) 
 
 4. **For findings categorized as "Критическое":** if the final confidence < 0.7 — downgrade the category to "Экономическое" or "Эксплуатационное". A critical finding with low confidence is more dangerous than its absence.
 
-### Step 6: Forming rejected[]
+### Step 6: Norm Quote Enrichment
+
+R1 agents leave `norm_quote` empty — they do not have access to the norms database. Your job is to enrich each finding with a verified quote.
+
+For each finding that has a `norm_ref`:
+1. Parse the norm designation and paragraph number from `norm_ref`
+2. Look up the paragraph in `norms_paragraphs.json`
+3. **If found:** fill `norm_quote` with the verified text, set `norm_confidence` to max(agent's value, 0.9)
+4. **If NOT found:** leave `norm_quote` empty, keep the agent's `norm_confidence` as-is, add note "paragraph not verified against database"
+5. **If the paragraph content contradicts the agent's claim:** lower `norm_confidence` by 0.2 and add a note in description
+
+This step ensures that all norm citations in the final report are verified against the authoritative database, not generated from model memory.
+
+### Step 7: Forming rejected[]
 
 For each rejected finding, record:
 - `original_id` — temp_id of the finding
@@ -170,7 +184,14 @@ Write the result to `_output/findings.json`:
     "max_confidence": 0.98,
     "notes": ""
   },
-  "step_6_rejected": {
+  "step_6_norm_quotes": {
+    "done": true,
+    "findings_with_norm_ref": 25,
+    "quotes_found": 18,
+    "quotes_not_found": 7,
+    "notes": ""
+  },
+  "step_7_rejected": {
     "done": true,
     "total_rejected": 19,
     "notes": ""
