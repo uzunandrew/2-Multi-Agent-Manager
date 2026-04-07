@@ -467,6 +467,17 @@ Do NOT read any files — all data is above.
 - Агенту в промпте написано "Do NOT read any files" — чтобы он не делал лишних Read
 - Единственный tool-вызов агента — Write для записи partial_*.json
 
+#### Ограничение tool calls
+
+В конце каждого inline-промпта добавлять:
+```
+STRICT BUDGET: You have exactly 1 tool call — Write to save your result.
+Do NOT make Read calls, do NOT split analysis across messages.
+Analyze everything above, then Write the JSON result in a single action.
+```
+
+Для агента `norms` (Read-режим) ограничение мягче — он должен прочитать файлы, но не больше 10 tool calls.
+
 #### Шаг 0и: Проверка покрытия (серые зоны)
 
 После маппинга оркестратор проверяет:
@@ -575,10 +586,15 @@ Do NOT read any files — all data is above.
 - Не дублировать partial_consistency.json между критиками
 - Упростить пайплайн (один агент вместо трёх)
 
+**Перед запуском критика** оркестратор генерирует norms_subset:
+```bash
+python3 Audits/build_norms_subset.py "projects/{SECTION}/{PROJECT_ID}"
+```
+
 Критик получает **в промпте**:
-- Все `_output/partial_*.json` (12 файлов)
+- Все `_output/partial_*.json`
 - `document_enriched.md` (полный — для сверки evidence с любых страниц)
-- `norms/norms_db.json` (для проверки статуса норм)
+- `_output/norms_subset.json` (только упомянутые нормы, ~6K вместо 120K токенов)
 - `Prompts_EN/common/R2_critic.md`
 
 Результат: `_output/review.json`
@@ -605,21 +621,22 @@ Do NOT read any files — all data is above.
 - `reject_speculative` — предположение с низкой уверенностью, нет убедительных фактов
 - `reject_wrong_zone` — замечание вне зоны ответственности агента
 
-### Раунд 3: Синтез (1 агент Sonnet)
+### Раунд 3: Синтез (Python-скрипт, без LLM)
 
-Перед синтезом оркестратор **фильтрует:**
-1. Удаляет замечания с вердиктом отклонения → `_output/rejected.json`
-2. Оставляет pass + pass_weak_norm → `_output/filtered_findings.json`
+Синтез выполняется **кодом**, а не LLM-агентом. Это экономит ~120K токенов.
 
-Синтезатор получает **в промпте** (контекст ~50-85 KB — легко влезает в Sonnet):
-- `_output/filtered_findings.json` — только принятые замечания
-- `_output/review.json` — reasoning критика (для коррекции norm_ref и confidence)
-- `norms/norms_paragraphs.json` — для обогащения замечаний проверенными цитатами пунктов норм
-- `Prompts_EN/common/R3_synthesizer.md`
+```bash
+python3 Audits/synthesize.py "projects/{SECTION}/{PROJECT_ID}"
+```
 
-**НЕ получает** `document_enriched.md` — синтезатор не ищет новое, а обрабатывает найденное.
-
-Синтезатор: дедупликация остатков → коррекция norm_ref (для pass_weak_norm) → обогащение norm_quote из norms_paragraphs.json → нумерация F-001..F-NNN → приоритизация → `findings.json`
+Скрипт автоматически:
+1. Читает `review.json` → фильтрует pass + pass_weak_norm
+2. Собирает полные finding-объекты из `partial_*.json`
+3. Дедупликация по page + title
+4. Пересчёт confidence по правилам (pass +0.1, pass_weak_norm -0.1, multi-agent +0.1)
+5. Обогащение norm_quote из `norms/norms_paragraphs.json`
+6. Сортировка (Критическое → Экономическое → Эксплуатационное) → нумерация F-001..F-NNN
+7. Записывает `_output/findings.json` + `_output/rejected.json`
 
 ### Раунд 4: Оптимизация (1 агент Opus + критик Sonnet)
 

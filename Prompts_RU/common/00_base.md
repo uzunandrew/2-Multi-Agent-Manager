@@ -18,7 +18,9 @@
 
 ## Формат выходного JSON
 
-Пиши результат в файл `_output/partial_<твоё_имя>.json` через Write tool. Формат:
+Пиши результат в файл `_output/partial_<твоё_имя>.json` через Write tool.
+
+**КОМПАКТНЫЙ ФОРМАТ — пиши коротко, экономь токены:**
 
 ```json
 {
@@ -27,24 +29,31 @@
     {
       "temp_id": "<имя>_001",
       "category": "Критическое|Экономическое|Эксплуатационное",
-      "title": "Краткое название (до 100 символов)",
-      "description": "Подробное описание проблемы с конкретными данными из документа",
+      "title": "Краткое название (макс. 80 символов)",
+      "description": "Макс. 2 предложения. Суть проблемы и где она.",
       "page": 7,
       "sheet": 5,
       "evidence": [
-        {"type": "text", "source": "Страница X, блок [TEXT] ID, цитата"},
-        {"type": "image", "block_id": "BLOCK_ID", "source": "Описание из structured_blocks"}
+        {"type": "text", "source": "стр.7 [TEXT] 4XD3: кабель ППГнг(А)-HF 5х4"},
+        {"type": "image", "block_id": "BLOCK_ID", "source": "На схеме QF1 C16"}
       ],
-      "norm_ref": "СП XXX, п. X.X.X",
+      "norm_ref": "СП 256, п.15.3",
       "norm_quote": "",
-      "norm_confidence": 0.95,
+      "norm_confidence": 0.9,
       "confidence": 0.85,
-      "recommendation": "Конкретное действие для исправления"
+      "recommendation": "Одно предложение: что исправить."
     }
   ],
   "checklist": {}
 }
 ```
+
+**Правила компактности:**
+- `description` — макс. 2 предложения, не повторяй title
+- `evidence.source` — одна строка с номером страницы, ID блока и ключевой цитатой (не абзац)
+- `recommendation` — одно предложение
+- `checklist.notes` — только ключевые слова, не абзацы
+- НЕ пиши длинных объяснений неопределённости — используй число `confidence`
 
 ### Hard checks и Soft checks
 

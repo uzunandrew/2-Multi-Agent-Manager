@@ -18,7 +18,9 @@ Each data type has one authoritative source. Do not mix them:
 
 ## Output JSON Format
 
-Write your result to `_output/partial_<your_name>.json` using the Write tool. Format:
+Write your result to `_output/partial_<your_name>.json` using the Write tool.
+
+**COMPACT FORMAT — keep output short to minimize token usage:**
 
 ```json
 {
@@ -27,24 +29,31 @@ Write your result to `_output/partial_<your_name>.json` using the Write tool. Fo
     {
       "temp_id": "<name>_001",
       "category": "Критическое|Экономическое|Эксплуатационное",
-      "title": "Brief title (up to 100 characters)",
-      "description": "Detailed description of the issue with specific data from the document",
+      "title": "Brief title (max 80 chars)",
+      "description": "Max 2 sentences. State the problem and where it is.",
       "page": 7,
       "sheet": 5,
       "evidence": [
-        {"type": "text", "source": "Page X, block [TEXT] ID, quote"},
-        {"type": "image", "block_id": "BLOCK_ID", "source": "Description from structured_blocks"}
+        {"type": "text", "source": "p.7 [TEXT] 4XD3: кабель ППГнг(А)-HF 5х4"},
+        {"type": "image", "block_id": "BLOCK_ID", "source": "Schema shows QF1 C16"}
       ],
-      "norm_ref": "СП XXX, п. X.X.X",
+      "norm_ref": "СП 256, п.15.3",
       "norm_quote": "",
-      "norm_confidence": 0.95,
+      "norm_confidence": 0.9,
       "confidence": 0.85,
-      "recommendation": "Specific corrective action"
+      "recommendation": "One sentence: what to fix."
     }
   ],
   "checklist": {}
 }
 ```
+
+**Compact rules:**
+- `description` — max 2 sentences, no repetition of title
+- `evidence.source` — one line with page, block ID, key quote (not a paragraph)
+- `recommendation` — one sentence
+- `checklist.notes` — keywords only, not paragraphs
+- Do NOT write long explanations of uncertainty — use `confidence` number instead
 
 ### Hard Checks and Soft Checks
 
