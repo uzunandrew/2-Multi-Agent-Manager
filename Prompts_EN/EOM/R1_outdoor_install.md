@@ -9,8 +9,11 @@ If the provided document slice contains no outdoor network plans, trench drawing
 ```json
 {
   "agent": "outdoor_install",
-  "status": "not_applicable",
-  "reason": "No outdoor network plans or trench drawings found in the provided sheets"
+  "findings": [],
+  "checklist": {
+    "not_applicable": true,
+    "reason": "No outdoor network plans or trench drawings found in the provided sheets"
+  }
 }
 ```
 
@@ -155,5 +158,5 @@ If an earthwork volume table exists:
 - Do not check cable cross-sections by current load (that is the cables agent)
 - Do not check lighting norms (that is the lighting agent)
 - Do not check norm reference currency (that is the norms agent)
-- Do not analyze drawings for text/diagram discrepancies (that is the drawings agent)
+- Do not analyze drawings for text/diagram discrepancies (that is the consistency agent)
 - Do not check discrepancies between sources (that is the `consistency` agent)

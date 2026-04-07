@@ -21,7 +21,17 @@ Before starting the analysis, check whether the provided slice of `document_enri
 - Emergency / evacuation lighting
 - Cable penetrations through fire barriers
 
-If none of the above is found → return result with `"not_applicable": true` and an empty `findings` list. Do not proceed with further steps.
+If none of the above is found → return the canonical format and do not proceed with further steps:
+```json
+{
+  "agent": "fire_safety",
+  "findings": [],
+  "checklist": {
+    "not_applicable": true,
+    "reason": "No fire safety data found in the provided slice"
+  }
+}
+```
 
 ### Step 1: Data Collection
 
@@ -310,7 +320,7 @@ After all checks, add a `"checklist"` field to the output JSON:
 - Do not check breaker-cable coordination (that is the `cables` agent)
 - Do not recalculate arithmetic in load tables (that is the `tables` agent)
 - Do not check currency of normative document numbers (that is the `norms` agent)
-- Do not visually analyze drawings for text/diagram discrepancies (that is the `drawings` agent)
+- Do not visually analyze drawings for text/diagram discrepancies (that is the `consistency` agent)
 - Do not check tray/duct construction (dimensions, fill rate, mounting) — that is the `cable_routes` agent
 - Do not check general equipment IP by environmental conditions — luminaire IP is the `lighting` agent, power equipment IP is the `power_equipment` agent
 - Do not check cable mark discrepancies between different sources (text vs specification vs diagram) — that is the `consistency` agent. Your task is only verifying the PRESENCE of the FR index on СПЗ lines

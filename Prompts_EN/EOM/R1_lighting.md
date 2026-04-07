@@ -13,7 +13,14 @@ Before starting the analysis, determine the project type:
 If the provided document slice contains **no lighting plans** (sheets categorized as `lighting_plan`, `facade_plan`) — return `not_applicable`:
 
 ```json
-{"agent": "lighting", "status": "not_applicable", "reason": "No lighting plans found in the provided document slice"}
+{
+  "agent": "lighting",
+  "findings": [],
+  "checklist": {
+    "not_applicable": true,
+    "reason": "No lighting plans found in the provided document slice"
+  }
+}
 ```
 
 ## IMPORTANT: Execution rules
@@ -121,8 +128,8 @@ Reference norms per СП 52.13330.2016 (with amendments) for outdoor lighting:
 | Венткамера | 75 |
 | Техэтаж | 50 |
 
-1. If the document specifies a calculated illuminance — compare with the norm
-2. If a lighting calculation is not performed / not attached → finding "Эксплуатационное", `confidence: 0.5`
+1. If the document specifies a calculated illuminance — compare with the norm. If the value is below the norm → finding
+2. If a lighting calculation is **not performed / not attached** → **DO NOT create a finding**. Record in `checklist.step_5_norms.notes`: "Lighting calculation absent, illuminance verification not possible"
 3. **Important:** these norms are reference values. The designer may have applied different values per the client's technical specifications.
 
 ## How to assess severity
@@ -135,7 +142,7 @@ Reference norms per СП 52.13330.2016 (with amendments) for outdoor lighting:
 | Number of DALI luminaires > 64 per line | Эксплуатационное | 0.8 |
 | Power discrepancy specification vs text > 5% | Экономическое | 0.8 |
 | IP not specified | Экономическое | 0.7 |
-| No lighting calculation | Эксплуатационное | 0.5 |
+| No lighting calculation | — (not a finding, record in checklist.notes) | — |
 
 ## Execution checklist
 
@@ -183,6 +190,6 @@ Reference norms per СП 52.13330.2016 (with amendments) for outdoor lighting:
 - Do not check fire safety requirements (that is the fire_safety agent)
 - Do not check emergency/evacuation lighting (that is the fire_safety agent)
 - Do not check norm document validity (that is the norms agent)
-- Do not visually analyze drawings for discrepancies (that is the drawings agent)
+- Do not visually analyze drawings for discrepancies (that is the consistency agent)
 - Do not check discrepancies between sources — plan vs specification (that is the consistency agent)
 - Do not flag missing position numbers in specification numbering (this is not a finding)

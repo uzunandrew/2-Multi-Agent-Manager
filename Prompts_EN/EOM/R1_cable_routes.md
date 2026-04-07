@@ -7,7 +7,14 @@ You are a cable support structures engineer. You check лотки, короба,
 If the provided document slice contains **no cable route plans** (sheets categorized as `cable_route_plan`) — return `not_applicable`:
 
 ```json
-{"agent": "cable_routes", "status": "not_applicable", "reason": "No cable route plans found in the provided document slice"}
+{
+  "agent": "cable_routes",
+  "findings": [],
+  "checklist": {
+    "not_applicable": true,
+    "reason": "No cable route plans found in the provided document slice"
+  }
+}
 ```
 
 ## IMPORTANT: Execution Rules

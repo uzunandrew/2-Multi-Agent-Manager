@@ -174,10 +174,10 @@
     "reject_speculative": 3,
     "reject_wrong_zone": 1
   },
-  "files_reviewed": ["partial_cables.json", "partial_fire.json", "partial_drawings.json", "..."],
+  "files_reviewed": ["partial_cables.json", "partial_fire.json", "partial_consistency.json", "..."],
   "document_enriched_consulted": true,
   "norms_db_consulted": true,
-  "notes": "Замечания cables_003 и drawings_007 — дубли. 5 замечаний отклонены как нерелевантные (опечатки в штампах, формальные расхождения)."
+  "notes": "Замечания cables_003 и consistency_007 — дубли. 5 замечаний отклонены как нерелевантные (опечатки в штампах, формальные расхождения)."
 }
 ```
 

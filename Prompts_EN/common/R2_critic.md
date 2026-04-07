@@ -174,10 +174,10 @@ Write the result to `_output/review.json`:
     "reject_speculative": 3,
     "reject_wrong_zone": 1
   },
-  "files_reviewed": ["partial_cables.json", "partial_fire.json", "partial_drawings.json", "..."],
+  "files_reviewed": ["partial_cables.json", "partial_fire.json", "partial_consistency.json", "..."],
   "document_enriched_consulted": true,
   "norms_db_consulted": true,
-  "notes": "Findings cables_003 and drawings_007 are duplicates. 5 findings rejected as irrelevant (title block typos, formal discrepancies)."
+  "notes": "Findings cables_003 and consistency_007 are duplicates. 5 findings rejected as irrelevant (title block typos, formal discrepancies)."
 }
 ```
 

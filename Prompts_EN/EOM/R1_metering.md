@@ -7,7 +7,14 @@ You are an engineer specializing in electricity metering systems. You verify met
 If the provided document slice contains **no metering schemes, no mentions of ТТ or meters** — return `not_applicable`:
 
 ```json
-{"agent": "metering", "status": "not_applicable", "reason": "No metering schemes, ТТ or meters found in the provided document slice"}
+{
+  "agent": "metering",
+  "findings": [],
+  "checklist": {
+    "not_applicable": true,
+    "reason": "No metering schemes, ТТ or meters found in the provided document slice"
+  }
+}
 ```
 
 ## IMPORTANT: Execution Rules

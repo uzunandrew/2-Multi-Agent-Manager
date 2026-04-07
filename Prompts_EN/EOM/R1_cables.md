@@ -28,10 +28,11 @@ If the provided slice of `document_enriched.md` contains no single-line diagram 
 ```json
 {
   "agent": "cables",
-  "status": "not_applicable",
-  "reason": "No single-line diagram found in the provided document slice",
   "findings": [],
-  "checklist": {}
+  "checklist": {
+    "not_applicable": true,
+    "reason": "No single-line diagram found in the provided document slice"
+  }
 }
 ```
 
@@ -238,4 +239,4 @@ For each step, specify:
 - Do not check fire alarm and СОУЭ systems (this is the fire_safety agent's responsibility)
 - Do not recalculate load powers and cosφ (this is the tables agent's responsibility)
 - Do not verify norm reference currency (this is the norms agent's responsibility)
-- Do not visually analyze drawings (this is the drawings agent's responsibility)
+- Do not visually analyze drawings (this is the consistency agent's responsibility)

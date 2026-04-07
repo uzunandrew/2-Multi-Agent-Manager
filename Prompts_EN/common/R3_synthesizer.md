@@ -119,7 +119,7 @@ Write the result to `_output/findings.json`:
       "norm_quote": "...",
       "norm_confidence": 0.95,
       "recommendation": "...",
-      "source_agents": ["cables", "drawings"],
+      "source_agents": ["cables", "consistency"],
       "critic_verdict": "pass",
       "confidence": 0.95
     }
@@ -156,7 +156,7 @@ Write the result to `_output/findings.json`:
     "review_files_read": 2,
     "total_findings": 47,
     "total_verdicts": 47,
-    "notes": "cables: 12, fire: 8, drawings: 10, tables: 9, norms: 8"
+    "notes": "cables: 12, fire: 8, consistency: 10, tables: 9, norms: 8"
   },
   "step_2_verdicts_applied": {
     "done": true,
@@ -175,7 +175,7 @@ Write the result to `_output/findings.json`:
   "step_4_categorization": {
     "done": true,
     "recategorized": 2,
-    "notes": "tables_003: Экономическое->Эксплуатационное, drawings_008: Критическое->Экономическое"
+    "notes": "tables_003: Экономическое->Эксплуатационное, consistency_008: Критическое->Экономическое"
   },
   "step_5_confidence": {
     "done": true,

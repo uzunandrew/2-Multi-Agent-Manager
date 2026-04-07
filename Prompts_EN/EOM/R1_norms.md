@@ -9,8 +9,11 @@ If the document contains no normative references section and no references to no
 ```json
 {
   "agent": "norms",
-  "status": "not_applicable",
-  "reason": "No normative references section found in the document"
+  "findings": [],
+  "checklist": {
+    "not_applicable": true,
+    "reason": "No normative references section found in the document"
+  }
 }
 ```
 
@@ -247,7 +250,7 @@ After all checks, add a `"checklist"` field to the output JSON:
 
 - Do not check technical decisions (cross-section adequacy, loads — that is other agents' scope)
 - Do not recalculate table arithmetic (that is the tables agent)
-- Do not analyze drawings (that is the drawings agent)
+- Do not analyze drawings (that is the consistency agent)
 - Do not fabricate a norm's status — if it is not in the database, honestly write `norm_confidence: 0.5`
 - Do not categorically assert "норма устарела" / "пункт не существует" without confirmation from the database
 - Do not assign "Критическое" to a norm whose status is not confirmed

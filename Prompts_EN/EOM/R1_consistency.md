@@ -34,7 +34,17 @@ You are an expert electrical engineer specializing in cross-referencing project 
 ## Applicability Filter
 
 Before starting checks, determine applicability:
-- If the slice contains **fewer than 2 source types** (e.g., only text with no schematic or specification) → write `"applicability": "not_applicable"` in output and stop
+- If the slice contains **fewer than 2 source types** (e.g., only text with no schematic or specification) → return the canonical format and stop:
+```json
+{
+  "agent": "consistency",
+  "findings": [],
+  "checklist": {
+    "not_applicable": true,
+    "reason": "Fewer than 2 source types in the provided slice"
+  }
+}
+```
 - Source types: text (general notes), schematic (single-line diagram), plan (floor/layout), specification, load table
 - If at least 2 source types exist → proceed with checks
 

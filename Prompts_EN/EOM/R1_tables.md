@@ -269,7 +269,7 @@ After all checks, add the `"checklist"` field to the output JSON:
 
 - Do not check cable brands by installation conditions (this is the cables agent)
 - Do not check fire resistance requirements (FR, EI) (this is the fire_safety agent)
-- Do not visually analyze drawings for discrepancies (this is the drawings agent)
+- Do not visually analyze drawings for discrepancies (this is the consistency agent)
 - Do not check the validity of normative document numbers (this is the norms agent)
 - Do not check specification completeness (quantities, missing items, duplicates, units of measurement) — this is the `consistency` agent
 - Do not check equipment brands/types between sources (specification vs diagram) — this is the `consistency` agent
