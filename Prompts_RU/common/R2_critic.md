@@ -13,9 +13,9 @@
 ## Входные данные
 
 Тебе передают **в промпте**:
-- Все `_output/partial_*.json` — замечания от всех агентов
+- `_output/critic_payload.json` — компактные замечания от всех агентов (собранные build_critic_payload.py), включая краткий результат `norm_finding_checks`
 - `document_enriched.md` — полный текст + описания чертежей (для сверки evidence)
-- `norms/norms_db.json` — для проверки ссылок на нормы
+- `_output/norms_subset.json` — для проверки ссылок на нормы (подмножество norms_db, собранное build_norms_subset.py)
 
 ## Порядок проверки каждого замечания
 
@@ -51,10 +51,26 @@
 ### Шаг 3: Проверка нормативной ссылки
 
 Если замечание содержит `norm_ref`:
-1. Найди норму в `norms/norms_db.json`
-2. Норма действует? (`status: active`)
-3. Пункт соответствует содержанию замечания?
-4. `norm_confidence` адекватна? (если агент поставил 0.95, но пункт сомнительный → отметь)
+1. Сначала посмотри в `critic_payload.json` поля:
+   - `norm_role`
+   - `claim_basis`
+   - `requires_exact_quote`
+   - `norm_check_status`
+   - `norm_support_level`
+   - `norm_doc_status`
+   - `corrected_norm_ref`
+   - `norm_quote_preview`
+2. Используй эти поля как **первичный сигнал** из предобработки `norm_finding_checks`
+3. При необходимости перепроверь документ в `_output/norms_subset.json`
+4. Норма действует? (`status: active`)
+5. Пункт соответствует содержанию замечания?
+6. `norm_confidence` адекватна? (если агент поставил 0.95, но пункт сомнительный → отметь)
+
+**Правило зависимости замечания от нормы:**
+- `norm_role = "none"` → слабая/отсутствующая норма сама по себе не должна убивать замечание
+- `norm_role = "supporting"` → если техническая суть подтверждается, допускается `pass_weak_norm`
+- `norm_role = "core"` → если норма не подтверждена, plain `pass` ставить нельзя
+- `requires_exact_quote = true` → без точной цитаты не ставь plain `pass`, если только evidence не делает проблему абсолютно очевидной и ты не ставишь `needs_human_review`
 
 **Если норма неверна — задай себе второй вопрос: а техническая суть замечания верна?**
 - Суть верна, но ссылка плохая → вердикт `pass_weak_norm` (замечание идёт дальше, синтезатор скорректирует ссылку)
@@ -149,11 +165,34 @@
       "finding_id": "cables_001",
       "verdict": "pass",
       "reasoning": "Подробное обоснование вердикта: что проверил, что нашёл",
-      "cross_check": "Что проверил дополнительно (перекрёстно с другими агентами)"
+      "cross_check": "Что проверил дополнительно (перекрёстно с другими агентами)",
+      "norm_review_status": "verified|corrected|weak_support|unsupported|not_needed|needs_human_review",
+      "norm_support_level": "direct|partial|context_only|unsupported",
+      "norm_doc_status": "active|replaced|cancelled|unknown|mixed",
+      "norm_quote_used": "",
+      "corrected_norm_ref": null,
+      "corrected_category": null,
+      "duplicate_of": null,
+      "needs_human_review": false
     }
   ]
 }
 ```
+
+### Поля структурных коррекций
+
+| Поле | Тип | Когда заполнять |
+|------|-----|----------------|
+| `corrected_norm_ref` | string \| null | При вердикте `pass_weak_norm` — укажи правильную нормативную ссылку, найденную при проверке |
+| `corrected_category` | string \| null | Если замечание относится к другой категории (`"Критическое"`, `"Экономическое"`, `"Эксплуатационное"`) |
+| `duplicate_of` | string \| null | При вердикте `duplicate` — `temp_id` более полного/подробного замечания |
+| `needs_human_review` | bool | `true` если не можешь вынести уверенный вердикт — пограничные случаи, противоречивые данные |
+| `norm_review_status` | string | Итог нормативной проверки: `verified`, `corrected`, `weak_support`, `unsupported`, `not_needed`, `needs_human_review` |
+| `norm_support_level` | string | Насколько норма реально поддерживает замечание: `direct`, `partial`, `context_only`, `unsupported` |
+| `norm_doc_status` | string | Агрегированный статус документа: `active`, `replaced`, `cancelled`, `unknown`, `mixed` |
+| `norm_quote_used` | string | Краткая точная цитата, если она была использована при принятии решения |
+
+Эти поля **опциональны** — ставь `null` / `false` когда не применимо.
 
 ## Чеклист выполнения
 
@@ -176,7 +215,7 @@
   },
   "files_reviewed": ["partial_cables.json", "partial_fire.json", "partial_consistency.json", "..."],
   "document_enriched_consulted": true,
-  "norms_db_consulted": true,
+  "norms_subset_consulted": true,
   "notes": "Замечания cables_003 и consistency_007 — дубли. 5 замечаний отклонены как нерелевантные (опечатки в штампах, формальные расхождения)."
 }
 ```
